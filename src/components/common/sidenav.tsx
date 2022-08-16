@@ -1,8 +1,6 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import * as React from 'react';
 import Drawer from '@mui/material/Drawer';
 import List from '@mui/material/List';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
 import {
   Home,
   Person,
@@ -16,47 +14,46 @@ const appMenuItems = [
   {
     name: 'Dashboard',
     link: '/',
-    Icon: Home,
+    Icon: <Home />,
   },
   {
     name: 'Kits',
-    link: '/orders',
-    Icon: Medication,
+    Icon: <Medication />,
     items: [
       {
+        link: '/view-kits',
         nestedName: 'View Kits',
       },
       {
+        link: '/add-kits',
         nestedName: 'Add Kits',
       },
     ],
   },
   {
     name: 'Accounts',
-    link: '/customers',
-    Icon: Person,
+    Icon: <Person />,
     items: [
       {
+        link: '/reset-password',
         nestedName: 'Reset Password',
-        Icon: InboxIcon,
       },
     ],
   },
   {
     name: 'Manage',
-    link: '/reports',
-    Icon: ManageAccounts,
+    Icon: <ManageAccounts />,
     items: [
       {
+        link: '/add-admin',
         nestedName: 'Add Admin',
-        Icon: InboxIcon,
       },
     ],
   },
   {
     name: 'Log out',
-    link: '/report',
-    Icon: Logout,
+    link: '/logout',
+    Icon: <Logout />,
   },
 ];
 
@@ -74,8 +71,8 @@ const SideNav = () => {
         }}
       >
         <List style={{ height: 58 }}>
-          {appMenuItems.map(({ name, Icon, items }) => (
-            <SideNavItem name={name} Icon={Icon} items={items} />
+          {appMenuItems.map(({ name, Icon, items, link }) => (
+            <SideNavItem name={name} Icon={Icon} items={items} link={link} />
           ))}
         </List>
       </Drawer>

@@ -1,29 +1,29 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import * as React from 'react';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import { Collapse } from '@mui/material';
+import {
+  List,
+  Collapse,
+  ListItem,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+} from '@mui/material';
 import { ExpandLess, ExpandMore } from '@mui/icons-material';
+import { Link } from 'react-router-dom';
 
-interface objectAttribute {
+interface Props {
   name: string;
-  Icon: string;
+  items: Array<Item> | undefined;
+  Icon: React.ReactNode;
+  link: string | undefined;
 }
-interface propsAttribute {
-  name: string;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  Icon: any;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  items: any;
+interface Item {
+  nestedName: string;
+  link: string;
 }
 
-const SideNavItem = (props: propsAttribute) => {
-  const { name, Icon, items = [] } = props;
+const SideNavItem = (props: Props) => {
+  const { name, Icon, items, link } = props;
   const isExpandable = items && items.length > 0;
-
   const [open, setOpen] = React.useState(false);
   const handleClick = () => {
     setOpen(!open);
@@ -39,47 +39,35 @@ const SideNavItem = (props: propsAttribute) => {
         <ListItemButton sx={{ height: 60 }}>
           {name === 'Log out' ? (
             <>
-              <ListItemText
-                primary={name}
-                style={{ color: '#70708C', margin: 0 }}
-              />
-              {!!Icon && (
-                <ListItemIcon style={{ color: '#70708C', margin: 0 }}>
-                  <Icon />
-                </ListItemIcon>
-              )}
+              {link ? <Link to={link} /> : null}
+              <ListItemText primary={name} style={{ color: '#70708C' }} />
+              <ListItemIcon style={{ color: '#70708C' }}>{Icon}</ListItemIcon>
             </>
           ) : (
             <>
-              {!!Icon && (
-                <ListItemIcon style={{ color: '#70708C', margin: 0 }}>
-                  <Icon />
-                </ListItemIcon>
-              )}
-              <ListItemText
-                primary={name}
-                style={{ color: '#70708C', margin: 0 }}
-              />
+              {link ? <Link to={link} /> : null}
+              <ListItemIcon style={{ color: '#70708C' }}>{Icon}</ListItemIcon>
+              <ListItemText primary={name} style={{ color: '#70708C' }} />
             </>
           )}
-          {isExpandable && !open && (
-            <ExpandMore style={{ color: '#70708C', margin: 0 }} />
-          )}
-          {isExpandable && open && (
-            <ExpandLess style={{ color: '#70708C', margin: 0 }} />
-          )}
+          {isExpandable && !open && <ExpandMore style={{ color: '#70708C' }} />}
+          {isExpandable && open && <ExpandLess style={{ color: '#70708C' }} />}
         </ListItemButton>
       </ListItem>
       {isExpandable ? (
         <Collapse in={open}>
           <List disablePadding>
-            {items.map((item: any) => (
-              <ListItem key={item.nestedName} disablePadding sx={{ pl: 7 }}>
+            {items.map((item: Item | undefined) => (
+              <ListItem key={item?.nestedName} disablePadding sx={{ pl: 7 }}>
                 <ListItemButton>
-                  <ListItemText
-                    primary={item.nestedName}
-                    style={{ color: '#70708C' }}
-                  />
+                  {item && item?.link ? (
+                    <Link to={item?.link} style={{ textDecoration: 'none' }}>
+                      <ListItemText
+                        primary={item?.nestedName}
+                        style={{ color: '#70708C' }}
+                      />
+                    </Link>
+                  ) : null}
                 </ListItemButton>
               </ListItem>
             ))}
