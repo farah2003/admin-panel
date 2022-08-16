@@ -12,4 +12,21 @@ export const theme = createTheme({
       main: '#f44336',
     },
   },
+  components: {
+    MuiListItem: {
+      styleOverrides: {
+        root: {
+          '&:hover': {
+            color: '#6841C9',
+          },
+          '&.active': {
+            background: '#6841C9',
+            '& .MuiListItemIcon-root': {
+              color: '#fff',
+            },
+          },
+        },
+      },
+    },
+  },
 });
