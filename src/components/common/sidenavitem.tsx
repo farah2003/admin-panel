@@ -15,14 +15,51 @@ interface Props {
   items: Array<Item> | undefined;
   Icon: React.ReactNode;
   link: string | undefined;
+  selected: boolean;
 }
 interface Item {
   nestedName: string;
   link: string;
 }
 
+const listItemStyle = {
+  color: '#70708C',
+  '&.active': {
+    background: '#00000014',
+    '& .MuiListItemIcon-root': {
+      color: '#fff',
+    },
+  },
+};
+const nestedListItem = {
+  color: '#70708C',
+  pl: 7,
+};
+const listItemTextStyle = {
+  pl: 2,
+};
+const listItemButtonStyle = {
+  height: '60px',
+  '&.Mui-selected ': {
+    backgroundColor: '#6838c914',
+    color: '#6841C9',
+  },
+  '&:hover': {
+    color: '#6841C9',
+  },
+};
+const nestedlistItemButton = {
+  height: '60px',
+  '&.Mui-selected ': {
+    backgroundColor: '#6838c914',
+    color: '#6841C9',
+  },
+  '&:hover': {
+    color: '#6841C9',
+  },
+};
 const SideNavItem = (props: Props) => {
-  const { name, Icon, items, link } = props;
+  const { name, Icon, items, link, selected } = props;
   const isExpandable = items && items.length > 0;
   const [open, setOpen] = React.useState(false);
   const handleClick = () => {
@@ -34,39 +71,36 @@ const SideNavItem = (props: Props) => {
         key={name}
         disablePadding
         onClick={handleClick}
-        sx={{ height: 60 }}
+        sx={listItemStyle}
       >
-        <ListItemButton sx={{ height: 60 }}>
+        <ListItemButton sx={listItemButtonStyle} selected={selected}>
           {name === 'Log out' ? (
             <>
-              {link ? <Link to={link} /> : null}
-              <ListItemText primary={name} style={{ color: '#70708C' }} />
-              <ListItemIcon style={{ color: '#70708C' }}>{Icon}</ListItemIcon>
+              <ListItemText primary={name} />
+              {Icon}
             </>
           ) : (
             <>
-              {link ? <Link to={link} /> : null}
-              <ListItemIcon style={{ color: '#70708C' }}>{Icon}</ListItemIcon>
-              <ListItemText primary={name} style={{ color: '#70708C' }} />
+              {Icon}
+              <ListItemText primary={name} sx={listItemTextStyle} />
             </>
           )}
-          {isExpandable && !open && <ExpandMore style={{ color: '#70708C' }} />}
-          {isExpandable && open && <ExpandLess style={{ color: '#70708C' }} />}
+          {isExpandable && !open && <ExpandMore />}
+          {isExpandable && open && <ExpandLess />}
         </ListItemButton>
       </ListItem>
       {isExpandable ? (
         <Collapse in={open}>
           <List disablePadding>
             {items.map((item: Item | undefined) => (
-              <ListItem key={item?.nestedName} disablePadding sx={{ pl: 7 }}>
-                <ListItemButton>
+              <ListItem
+                key={item?.nestedName}
+                sx={nestedListItem}
+                disablePadding
+              >
+                <ListItemButton sx={nestedlistItemButton}>
                   {item && item?.link ? (
-                    <Link to={item?.link} style={{ textDecoration: 'none' }}>
-                      <ListItemText
-                        primary={item?.nestedName}
-                        style={{ color: '#70708C' }}
-                      />
-                    </Link>
+                    <ListItemText primary={item?.nestedName} />
                   ) : null}
                 </ListItemButton>
               </ListItem>

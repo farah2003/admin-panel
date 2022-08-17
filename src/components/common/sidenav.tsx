@@ -15,10 +15,12 @@ const appMenuItems = [
     name: 'Dashboard',
     link: '/',
     Icon: <Home />,
+    selected: true,
   },
   {
     name: 'Kits',
     Icon: <Medication />,
+    selected: false,
     items: [
       {
         link: '/view-kits',
@@ -33,6 +35,7 @@ const appMenuItems = [
   {
     name: 'Accounts',
     Icon: <Person />,
+    selected: false,
     items: [
       {
         link: '/reset-password',
@@ -43,6 +46,7 @@ const appMenuItems = [
   {
     name: 'Manage',
     Icon: <ManageAccounts />,
+    selected: false,
     items: [
       {
         link: '/add-admin',
@@ -53,6 +57,7 @@ const appMenuItems = [
   {
     name: 'Log out',
     link: '/logout',
+    selected: false,
     Icon: <Logout />,
   },
 ];
@@ -65,14 +70,21 @@ const SideNav = () => {
         sx={{
           '& .MuiDrawer-paper': {
             boxSizing: 'border-box',
-            width: 250,
+            width: '14vw',
             backgroundColor: '#F6F8FE',
+            border: 'none',
           },
         }}
       >
         <List style={{ height: 58 }}>
-          {appMenuItems.map(({ name, Icon, items, link }) => (
-            <SideNavItem name={name} Icon={Icon} items={items} link={link} />
+          {appMenuItems.map(({ name, Icon, items, link, selected }) => (
+            <SideNavItem
+              name={name}
+              Icon={Icon}
+              items={items}
+              link={link}
+              selected={selected}
+            />
           ))}
         </List>
       </Drawer>
