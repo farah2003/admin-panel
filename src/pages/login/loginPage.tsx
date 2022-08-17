@@ -1,16 +1,42 @@
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
+
 import Typography from '@mui/material/Typography';
 import { useFormik } from 'formik';
+import CircularProgress from '@mui/material/CircularProgress';
 import { Button, Input } from '../../components';
 import { loginSchema } from '../../utils';
 import './style.css';
 import loginImage from '../../assets/loginLogo.png';
 import UserContext from '../../context/userContext';
+import { http } from '../../services';
 
 const LoginPage = () => {
-  const { user, setUser } = useContext(UserContext);
-  const onSubmit = (values: { email: string; password: string }) => {
+  const { setUser } = useContext(UserContext);
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+  const onSubmit = async (values: { email: string; password: string }) => {
+    setLoading(true);
     console.log(values);
+    try {
+      const {
+        data: { payload },
+      } = await http.post('/api/v1/login/', values);
+
+      setUser({
+        id: payload.id,
+        email: payload.email,
+        firstName: payload.firstName,
+        lastName: payload.lastName,
+        lastLogin: payload.lastLogin,
+        userIp: payload.userIp,
+        userRoleId: payload.usersRoleId,
+      });
+      setLoading(false);
+      setError('');
+    } catch (e) {
+      setLoading(false);
+      setError('Invalid email or password');
+    }
   };
 
   const formik = useFormik({
@@ -59,6 +85,16 @@ const LoginPage = () => {
           <Button color="primary" type="submit" fullWidth>
             Sign In
           </Button>
+          {error && (
+            <Typography
+              variant="body1"
+              sx={{ marginTop: '10px' }}
+              color="error"
+            >
+              {error}
+            </Typography>
+          )}
+          {loading && <CircularProgress sx={{ marginTop: '20px' }} />}
         </form>
       </div>
       <div className="login-image-container">
