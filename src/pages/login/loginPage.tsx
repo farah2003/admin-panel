@@ -1,14 +1,18 @@
+import { useContext } from 'react';
 import Typography from '@mui/material/Typography';
 import { useFormik } from 'formik';
 import { Button, Input } from '../../components';
 import { loginSchema } from '../../utils';
 import './style.css';
 import loginImage from '../../assets/loginLogo.png';
+import UserContext from '../../context/userContext';
 
 const LoginPage = () => {
+  const { user, setUser } = useContext(UserContext);
   const onSubmit = (values: { email: string; password: string }) => {
     console.log(values);
   };
+
   const formik = useFormik({
     initialValues: {
       email: '',

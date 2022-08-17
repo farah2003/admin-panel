@@ -4,6 +4,7 @@ import './index.css';
 import { ThemeProvider } from '@mui/material';
 import App from './App';
 import { theme } from './themes';
+import UserProvider from './context/userProvider';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -11,7 +12,9 @@ const root = ReactDOM.createRoot(
 root.render(
   <ThemeProvider theme={theme}>
     <React.StrictMode>
-      <App />
+      <UserProvider>
+        <App />
+      </UserProvider>
     </React.StrictMode>
   </ThemeProvider>
 );
