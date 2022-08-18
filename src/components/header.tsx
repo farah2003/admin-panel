@@ -1,9 +1,5 @@
 import React from 'react';
-import Box from '@mui/material/Box';
-import Badge from '@mui/material/Badge';
-import MailIcon from '@mui/icons-material/Mail';
-import IconButton from '@mui/material/IconButton';
-import { Avatar } from '@mui/material';
+import { Avatar, Box } from '@mui/material';
 
 const Header = () => {
   return (

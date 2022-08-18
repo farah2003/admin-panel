@@ -15,7 +15,6 @@ const appMenuItems = [
     name: 'Dashboard',
     link: '/',
     Icon: <Home />,
-    selected: true,
   },
   {
     name: 'Kits',
@@ -35,7 +34,7 @@ const appMenuItems = [
   {
     name: 'Accounts',
     Icon: <Person />,
-    selected: false,
+
     items: [
       {
         link: '/reset-password',
@@ -46,7 +45,7 @@ const appMenuItems = [
   {
     name: 'Manage',
     Icon: <ManageAccounts />,
-    selected: false,
+
     items: [
       {
         link: '/add-admin',
@@ -57,36 +56,33 @@ const appMenuItems = [
   {
     name: 'Log out',
     link: '/logout',
-    selected: false,
     Icon: <Logout />,
   },
 ];
 
 const SideNav = () => {
+  const [selectedItem, setSelectedItem] = React.useState('Dashboard');
+  const drawer = {
+    '& .MuiDrawer-paper': {
+      boxSizing: 'border-box',
+      width: '14vw',
+      backgroundColor: '#F6F8FE',
+      border: 'none',
+    },
+  };
   return (
     <div>
-      <Drawer
-        variant="permanent"
-        sx={{
-          '& .MuiDrawer-paper': {
-            boxSizing: 'border-box',
-            width: '14vw',
-            backgroundColor: '#F6F8FE',
-            border: 'none',
-          },
-        }}
-      >
-        <List style={{ height: 58 }}>
-          {appMenuItems.map(({ name, Icon, items, link, selected }) => (
-            <SideNavItem
-              name={name}
-              Icon={Icon}
-              items={items}
-              link={link}
-              selected={selected}
-            />
-          ))}
-        </List>
+      <Drawer variant="permanent" sx={drawer}>
+        {appMenuItems.map(({ name, Icon, items, link }) => (
+          <SideNavItem
+            name={name}
+            Icon={Icon}
+            items={items}
+            link={link}
+            selectedItem={selectedItem}
+            setSelectedItem={setSelectedItem}
+          />
+        ))}
       </Drawer>
     </div>
   );

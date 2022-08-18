@@ -4,7 +4,6 @@ import {
   Collapse,
   ListItem,
   ListItemButton,
-  ListItemIcon,
   ListItemText,
 } from '@mui/material';
 import { ExpandLess, ExpandMore } from '@mui/icons-material';
@@ -15,7 +14,8 @@ interface Props {
   items: Array<Item> | undefined;
   Icon: React.ReactNode;
   link: string | undefined;
-  selected: boolean;
+  selectedItem: string;
+  setSelectedItem: React.Dispatch<React.SetStateAction<string>>;
 }
 interface Item {
   nestedName: string;
@@ -26,6 +26,7 @@ const listItemStyle = {
   color: '#70708C',
   '&.active': {
     background: '#00000014',
+    borderRaduis:""
     '& .MuiListItemIcon-root': {
       color: '#fff',
     },
@@ -58,37 +59,46 @@ const nestedlistItemButton = {
     color: '#6841C9',
   },
 };
+
 const SideNavItem = (props: Props) => {
-  const { name, Icon, items, link, selected } = props;
+  const { name, Icon, items, link, setSelectedItem, selectedItem } = props;
   const isExpandable = items && items.length > 0;
   const [open, setOpen] = React.useState(false);
-  const handleClick = () => {
+
+  const handleClick = (itemName: string) => {
     setOpen(!open);
+    setSelectedItem(itemName);
   };
+  const handleNestChange = (itemName: string) => {
+    setSelectedItem(itemName);
+  };
+
   return (
     <>
-      <ListItem
-        key={name}
-        disablePadding
-        onClick={handleClick}
-        sx={listItemStyle}
-      >
-        <ListItemButton sx={listItemButtonStyle} selected={selected}>
-          {name === 'Log out' ? (
-            <>
-              <ListItemText primary={name} />
-              {Icon}
-            </>
-          ) : (
-            <>
-              {Icon}
-              <ListItemText primary={name} sx={listItemTextStyle} />
-            </>
-          )}
-          {isExpandable && !open && <ExpandMore />}
-          {isExpandable && open && <ExpandLess />}
-        </ListItemButton>
-      </ListItem>
+      <List>
+        <ListItem key={name} disablePadding sx={listItemStyle}>
+          <ListItemButton
+            {...(link ? { component: Link, to: link } : {})}
+            onClick={() => handleClick(name)}
+            sx={listItemButtonStyle}
+            selected={name === selectedItem}
+          >
+            {name === 'Log out' ? (
+              <>
+                <ListItemText primary={name} />
+                {Icon}
+              </>
+            ) : (
+              <>
+                {Icon}
+                <ListItemText primary={name} sx={listItemTextStyle} />
+              </>
+            )}
+            {isExpandable && !open && <ExpandMore />}
+            {isExpandable && open && <ExpandLess />}
+          </ListItemButton>
+        </ListItem>
+      </List>
       {isExpandable ? (
         <Collapse in={open}>
           <List disablePadding>
@@ -98,11 +108,17 @@ const SideNavItem = (props: Props) => {
                 sx={nestedListItem}
                 disablePadding
               >
-                <ListItemButton sx={nestedlistItemButton}>
-                  {item && item?.link ? (
+                {item && item?.link && (
+                  <ListItemButton
+                    component={Link}
+                    to={item.link}
+                    sx={nestedlistItemButton}
+                    onClick={() => handleNestChange(item?.nestedName)}
+                    selected={item?.nestedName === selectedItem}
+                  >
                     <ListItemText primary={item?.nestedName} />
-                  ) : null}
-                </ListItemButton>
+                  </ListItemButton>
+                )}
               </ListItem>
             ))}
           </List>
