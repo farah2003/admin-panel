@@ -1,16 +1,15 @@
 import React from 'react';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import './App.css';
-
-import { Button, Input } from './components';
+import { LoginPage } from './pages';
 
 function App() {
   return (
-    <div>
-      <Button color="primary">Hello World</Button>
-      <br />
-      <br />
-      <Input label="Full Width" />
-    </div>
+    <>
+      <ToastContainer />
+      <LoginPage />
+    </>
   );
 }
 

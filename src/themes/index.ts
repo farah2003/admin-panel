@@ -11,5 +11,11 @@ export const theme = createTheme({
     error: {
       main: '#f44336',
     },
+    background: {
+      default: '#fff',
+    },
+  },
+  typography: {
+    fontFamily: 'DM Sans',
   },
 });

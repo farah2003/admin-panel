@@ -1,5 +1,6 @@
 import MaterialButton from '@mui/material/Button';
 import { ReactNode } from 'react';
+import { buttonStyle } from './commonStyle';
 
 interface ButtonProps {
   color?:
@@ -14,6 +15,7 @@ interface ButtonProps {
   onClick?: () => void;
   children?: ReactNode;
   fullWidth?: boolean;
+  type?: 'button' | 'submit' | 'reset';
 }
 
 const Button = ({
@@ -21,6 +23,7 @@ const Button = ({
   onClick,
   children,
   fullWidth = false,
+  type = 'button',
 }: ButtonProps) => {
   return (
     <MaterialButton
@@ -28,6 +31,8 @@ const Button = ({
       onClick={onClick}
       variant="contained"
       fullWidth={fullWidth}
+      type={type}
+      sx={buttonStyle}
     >
       {children}
     </MaterialButton>
