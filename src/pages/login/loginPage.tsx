@@ -1,21 +1,20 @@
 import { useContext, useState } from 'react';
-
-import Typography from '@mui/material/Typography';
+import { Typography, CircularProgress } from '@mui/material';
 import { useFormik } from 'formik';
-import CircularProgress from '@mui/material/CircularProgress';
 import { Button, Input } from '../../components';
 import { loginSchema } from '../../utils';
-import './style.css';
 import loginImage from '../../assets/loginLogo.png';
 import UserContext from '../../context/userContext';
 import { http } from '../../services';
+import { LoginCredentials } from '../../interfaces';
+import './style.css';
 
 const LoginPage = () => {
   const { setUser } = useContext(UserContext);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const onSubmit = async (values: { email: string; password: string }) => {
+  const onSubmit = async (values: LoginCredentials) => {
     setLoading(true);
     try {
       const {
