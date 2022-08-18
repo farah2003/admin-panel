@@ -14,13 +14,13 @@ const LoginPage = () => {
   const { setUser } = useContext(UserContext);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+
   const onSubmit = async (values: { email: string; password: string }) => {
     setLoading(true);
-    console.log(values);
     try {
       const {
         data: { payload },
-      } = await http.post('/api/v1/login/', values);
+      } = await http.post('api/v1/login/', values);
 
       setUser({
         id: payload.id,
