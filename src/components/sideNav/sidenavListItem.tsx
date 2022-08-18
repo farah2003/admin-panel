@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Dispatch, SetStateAction, ReactNode, useState } from 'react';
 import { ListItem, ListItemButton, ListItemText } from '@mui/material';
 import { ExpandLess, ExpandMore } from '@mui/icons-material';
@@ -41,7 +42,8 @@ const SideNavListItem = ({
           onClick={() => handleClick(name)}
           sx={style.listItemButton}
           selected={name === selectedItem}
-          {...(link ? { component: Link, to: link } : {})}
+          component={Link}
+          to={link || '#'}
         >
           {name === 'Log out' ? (
             <>

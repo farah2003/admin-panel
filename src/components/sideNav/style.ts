@@ -44,3 +44,12 @@ export const nestedlistItemButton = {
     borderRadius: '5px',
   },
 };
+
+export const imageContainer = {
+  display: 'flex',
+  justifyContent: 'space-between',
+  alignContent: 'center',
+};
+export const image = {
+  width: '200px',
+};
