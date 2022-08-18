@@ -26,7 +26,7 @@ const listItemStyle = {
   color: '#70708C',
   '&.active': {
     background: '#00000014',
-    borderRaduis:""
+
     '& .MuiListItemIcon-root': {
       color: '#fff',
     },
@@ -34,29 +34,36 @@ const listItemStyle = {
 };
 const nestedListItem = {
   color: '#70708C',
-  pl: 7,
+  pl: 4.7,
 };
 const listItemTextStyle = {
-  pl: 2,
+  pl: 2.2,
 };
 const listItemButtonStyle = {
   height: '60px',
+
   '&.Mui-selected ': {
     backgroundColor: '#6838c914',
     color: '#6841C9',
+    borderRadius: '5px',
   },
   '&:hover': {
     color: '#6841C9',
+    borderRadius: '5px',
   },
 };
 const nestedlistItemButton = {
-  height: '60px',
+  height: '50px',
+  marginBottom: '5px',
+
   '&.Mui-selected ': {
     backgroundColor: '#6838c914',
     color: '#6841C9',
+    borderRadius: '5px',
   },
   '&:hover': {
     color: '#6841C9',
+    borderRadius: '5px',
   },
 };
 
@@ -99,7 +106,7 @@ const SideNavItem = (props: Props) => {
           </ListItemButton>
         </ListItem>
       </List>
-      {isExpandable ? (
+      {isExpandable && (
         <Collapse in={open}>
           <List disablePadding>
             {items.map((item: Item | undefined) => (
@@ -123,7 +130,7 @@ const SideNavItem = (props: Props) => {
             ))}
           </List>
         </Collapse>
-      ) : null}
+      )}
     </>
   );
 };

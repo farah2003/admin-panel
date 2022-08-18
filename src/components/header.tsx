@@ -5,8 +5,8 @@ const Header = () => {
   return (
     <Box
       sx={{
-        height: '5%',
-        padding: '1%',
+        height: '7%',
+        padding: '1.5% 2.5%',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'flex-end',
