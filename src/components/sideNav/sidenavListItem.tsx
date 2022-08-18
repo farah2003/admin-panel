@@ -41,8 +41,7 @@ const SideNavListItem = ({
           onClick={() => handleClick(name)}
           sx={style.listItemButton}
           selected={name === selectedItem}
-          component={Link}
-          to={link || ''}
+          {...(link ? { component: Link, to: link } : {})}
         >
           {name === 'Log out' ? (
             <>

@@ -1,11 +1,13 @@
-import React from 'react';
 import { Routes, BrowserRouter, Route } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
 import { Dashboard } from './components';
-import './App.css';
+import { LoginPage } from './pages';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   return (
     <BrowserRouter>
+      <ToastContainer />
       <Routes>
         <Route path="/" element={<Dashboard />}>
           <Route index element={<h1>charts</h1>} />
@@ -15,6 +17,7 @@ function App() {
           <Route path="add-admin" element={<h1>add-admin</h1>} />
           <Route path="logout" element={<h1>logout</h1>} />
         </Route>
+        <Route path="login" element={<LoginPage />} />
       </Routes>
     </BrowserRouter>
   );

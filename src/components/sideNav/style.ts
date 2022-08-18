@@ -8,17 +8,10 @@ export const drawer = {
 };
 
 export const listItem = {
-  color: '#70708C',
-  '&.active': {
-    background: '#00000014',
-
-    '& .MuiListItemIcon-root': {
-      color: '#fff',
-    },
-  },
+  color: ['secondary.main'],
 };
 export const nestedListItem = {
-  color: '#70708C',
+  color: ['secondary.main'],
   pl: 4.7,
 };
 export const listItemText = {
@@ -26,28 +19,28 @@ export const listItemText = {
 };
 export const listItemButton = {
   height: '60px',
-
   '&.Mui-selected ': {
-    backgroundColor: '#6838c914',
-    color: '#6841C9',
+    backgroundColor: ['primary.light'],
+    color: ['primary.main'],
     borderRadius: '5px',
   },
   '&:hover': {
-    color: '#6841C9',
+    color: ['primary.main'],
     borderRadius: '5px',
   },
 };
 export const nestedlistItemButton = {
   height: '50px',
-  marginBottom: '5px',
+  marginBottom: '2.5px',
+  marginTop: '2.5px',
 
   '&.Mui-selected ': {
-    backgroundColor: '#6838c914',
-    color: '#6841C9',
+    backgroundColor: ['primary.light'],
+    color: ['primary.main'],
     borderRadius: '5px',
   },
   '&:hover': {
-    color: '#6841C9',
+    color: ['primary.main'],
     borderRadius: '5px',
   },
 };

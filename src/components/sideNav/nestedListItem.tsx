@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction } from 'react';
+import { Link } from 'react-router-dom';
 import {
   List,
   Collapse,
@@ -6,19 +6,8 @@ import {
   ListItemButton,
   ListItemText,
 } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { Props, Item } from '../../interfaces';
 import * as style from './style';
-
-interface Item {
-  name: string;
-  link: string;
-}
-interface Props {
-  open: boolean;
-  items: Array<Item>;
-  selectedItem: string;
-  setSelectedItem: Dispatch<SetStateAction<string>>;
-}
 
 const NestedListItem = ({
   open,
