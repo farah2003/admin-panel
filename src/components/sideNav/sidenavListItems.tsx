@@ -1,35 +1,21 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { Dispatch, SetStateAction, ReactNode, useState } from 'react';
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { ListItem, ListItemButton, ListItemText } from '@mui/material';
 import { ExpandLess, ExpandMore } from '@mui/icons-material';
-import { Link } from 'react-router-dom';
 import NestedListItem from './nestedListItem';
+import { NavBarInterface } from '../../interfaces';
 import * as style from './style';
 
-interface Props {
-  name: string;
-  items: Array<Item> | undefined;
-  Icon: ReactNode;
-  link: string | undefined;
-  selectedItem: string;
-  setSelectedItem: Dispatch<SetStateAction<string>>;
-}
-interface Item {
-  name: string;
-  link: string;
-}
-
-const SideNavListItem = ({
+const SideNavListItems = ({
   name,
   Icon,
   items,
   link,
   setSelectedItem,
   selectedItem,
-}: Props) => {
+}: NavBarInterface.Props) => {
   const isExpandable = items && items.length > 0;
   const [open, setOpen] = useState(false);
-
   const handleClick = (title: string) => {
     setOpen(!open);
     setSelectedItem(title);
@@ -72,4 +58,4 @@ const SideNavListItem = ({
   );
 };
 
-export default SideNavListItem;
+export default SideNavListItems;
