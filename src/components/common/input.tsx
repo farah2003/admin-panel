@@ -1,17 +1,17 @@
 import TextField from '@mui/material/TextField';
-import { ChangeEventHandler } from 'react';
+import { ChangeEventHandler, ReactNode } from 'react';
 import { inputStyle } from './commonStyle';
 
 interface InputProps {
   name?: string;
   id: string;
   fullWidth?: boolean;
-  label: string;
+  label?: string;
   type?: string;
-  value?: string;
+  value?: unknown;
   onChange?: ChangeEventHandler;
   error?: boolean | undefined;
-  helperText?: string | false | undefined;
+  helperText?: ReactNode;
 }
 
 const Input = ({

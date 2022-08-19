@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import UserContext from './userContext';
-import { User } from '../interfaces';
+import { User } from '../../interfaces';
 
 interface UserProviderProps {
   children: React.ReactNode;

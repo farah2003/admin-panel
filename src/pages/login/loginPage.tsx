@@ -4,7 +4,7 @@ import { useFormik } from 'formik';
 import { Button, Input } from '../../components';
 import { loginSchema } from '../../utils';
 import loginImage from '../../assets/loginLogo.png';
-import UserContext from '../../context/userContext';
+import { UserContext } from '../../context';
 import { http } from '../../services';
 import { LoginCredentials } from '../../interfaces';
 import './style.css';
