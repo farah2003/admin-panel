@@ -7,8 +7,9 @@ export const theme = createTheme({
       light: '#6838c914',
     },
     secondary: {
-      main: '#70708C',
-      light: '#F6F8FE',
+      dark: '#70708C',
+      main: '#F6F8FE',
+      light: '#ffff',
     },
     error: {
       main: '#f44336',
@@ -17,5 +18,24 @@ export const theme = createTheme({
   typography: {
     fontFamily: 'DM Sans',
   },
-  components: {},
+  breakpoints: {
+    values: {
+      xs: 0,
+      sm: 600,
+      md: 900,
+      lg: 1200,
+      xl: 1536,
+    },
+  },
+  components: {
+    MuiDrawer: {
+      styleOverrides: {
+        paper: {
+          background: '#F6F8FE',
+
+          boxSizing: 'border-box',
+        },
+      },
+    },
+  },
 });
