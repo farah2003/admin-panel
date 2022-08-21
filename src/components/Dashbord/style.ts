@@ -24,11 +24,15 @@ export const main = {
 };
 export const content = {
   width: '96%',
-  height: '89%',
+  height: '90%',
   margin: '.4% 2%',
   borderRadius: {
     lg: '20px',
     xl: '20px',
   },
+
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
   backgroundColor: ['secondary.light'],
 };
