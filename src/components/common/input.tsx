@@ -12,6 +12,7 @@ interface InputProps {
   onChange?: ChangeEventHandler;
   error?: boolean | undefined;
   helperText?: ReactNode;
+  hidden?: boolean;
 }
 
 const Input = ({
@@ -24,6 +25,7 @@ const Input = ({
   onChange,
   error,
   helperText,
+  hidden = false,
 }: InputProps) => {
   return (
     <TextField
@@ -37,6 +39,7 @@ const Input = ({
       error={error}
       helperText={helperText}
       sx={inputStyle}
+      hidden={hidden}
     />
   );
 };

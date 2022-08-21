@@ -3,7 +3,7 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
 import { Typography } from '@mui/material';
-import { AddSingleKit } from '../../components';
+import { AddSingleKit, AddMultipleKits } from '../../components';
 import LoginPage from '../login/loginPage';
 
 interface TabPanelProps {
@@ -31,7 +31,7 @@ function TabPanel(props: TabPanelProps) {
 function a11yProps(index: number) {
   return {
     id: `simple-tab-${index}`,
-    'aria-controls': `simple-tabpanel-${index}`,
+    'aria-controls': `add kits-${index}`,
   };
 }
 
@@ -48,11 +48,7 @@ export default function AddKits() {
         Add kits
       </Typography>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-        <Tabs
-          value={value}
-          onChange={handleChange}
-          aria-label="basic tabs example"
-        >
+        <Tabs value={value} onChange={handleChange} aria-label="add kits tabs">
           <Tab label="Single Kit" {...a11yProps(0)} />
           <Tab label="Multiple Kits" {...a11yProps(1)} />
         </Tabs>
@@ -61,7 +57,7 @@ export default function AddKits() {
         <AddSingleKit />
       </TabPanel>
       <TabPanel value={value} index={1}>
-        <LoginPage />
+        <AddMultipleKits />
       </TabPanel>
     </Box>
   );

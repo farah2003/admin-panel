@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react';
+import { useState } from 'react';
 import { Box, Typography, CircularProgress } from '@mui/material';
 import { useFormik } from 'formik';
 import { toast } from 'react-toastify';
@@ -7,11 +7,8 @@ import { http } from '../../services';
 import './styles.css';
 import { addSingleKitSchema } from '../../utils';
 import { AddSingleKitI } from '../../interfaces';
-import { KitsContext, UserContext } from '../../context';
 
 const AddSingleKit = () => {
-  const { kits, setKits } = useContext(KitsContext);
-  const { user } = useContext(UserContext);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const onSubmit = async (values: AddSingleKitI) => {
@@ -20,7 +17,7 @@ const AddSingleKit = () => {
       const date = new Date(values.expirationDate);
       const expirationDate = date.toISOString().split('T')[0];
 
-      const response = await http.post('api/v1/kits/', {
+      await http.post('api/v1/kits/', {
         kitsQR: [
           {
             code: values.qrCode,
@@ -31,17 +28,7 @@ const AddSingleKit = () => {
       });
       setLoading(false);
       setError('');
-      setKits([
-        ...kits,
-        {
-          id: response.data[0].id,
-          qrCode: response.data[0].information.code,
-          expirationDate,
-          kitType: values.kitType as number,
-          createdBy: `${user.firstName} ${user.lastName}`,
-          updatedBy: `${user.firstName} ${user.lastName}`,
-        },
-      ]);
+
       toast.success('Kit added successfully');
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (e: any) {
