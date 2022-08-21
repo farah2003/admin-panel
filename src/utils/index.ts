@@ -1,3 +1,3 @@
-import { loginSchema } from './validation';
+import { loginSchema, addSingleKitSchema } from './validation';
 
-export { loginSchema };
+export { loginSchema, addSingleKitSchema };
