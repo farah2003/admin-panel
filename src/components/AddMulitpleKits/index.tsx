@@ -6,10 +6,9 @@ import * as xlsx from 'xlsx';
 import { Button } from '../../components';
 import { http } from '../../services';
 import { Kit } from '../../interfaces';
-// percent of n winter  days per contract period
 
 const AddMultipleKits = () => {
-  const [uploadedKits, setUploadedKits] = useState([{} as Kit]);
+  const [uploadedKits, setUploadedKits] = useState<Kit[]>([]);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const [disabled, setDisabled] = useState(true);
@@ -75,7 +74,7 @@ const AddMultipleKits = () => {
     reader.readAsBinaryString(file);
   };
   useEffect(() => {
-    if (uploadedKits.length > 0) {
+    if (uploadedKits.length) {
       setDisabled(false);
       setError('');
     } else {
@@ -103,7 +102,7 @@ const AddMultipleKits = () => {
   };
   return (
     <>
-      <Box>
+      <Box sx={{ width: '250px' }}>
         <FileUploader
           handleChange={handleChange}
           name="file"

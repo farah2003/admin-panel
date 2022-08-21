@@ -4,7 +4,6 @@ import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
 import { Typography } from '@mui/material';
 import { AddSingleKit, AddMultipleKits } from '../../components';
-import LoginPage from '../login/loginPage';
 
 interface TabPanelProps {
   children?: React.ReactNode;
