@@ -2,6 +2,7 @@ import { Routes, BrowserRouter, Route } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import { Dashboard } from './components';
 import { LoginPage } from './pages';
+import { GenericTable } from './components/common/table';
 import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
@@ -11,7 +12,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Dashboard />}>
           <Route index element={<h1>charts</h1>} />
-          <Route path="view-kits" element={<h1>view-kits</h1>} />
+          <Route path="view-kits" element={<GenericTable />} />
           <Route path="add-kits" element={<h1>add-kits</h1>} />
           <Route path="reset-password" element={<h1>reset-password</h1>} />
           <Route path="add-admin" element={<h1>add-admin</h1>} />
