@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
 import { Box } from '@mui/material';
-import { useMediaQuery } from '@material-ui/core';
+import { useMediaQuery } from 'usehooks-ts';
 import SideNav from '../sideNav/sidenav';
 import Header from '../Header/header';
 import * as style from './style';
