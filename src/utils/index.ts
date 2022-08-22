@@ -1,3 +1,7 @@
-import { loginSchema, addSingleKitSchema } from './validation';
+import {
+  loginSchema,
+  addSingleKitSchema,
+  changePasswordSchema,
+} from './validation';
 
-export { loginSchema, addSingleKitSchema };
+export { loginSchema, addSingleKitSchema, changePasswordSchema };

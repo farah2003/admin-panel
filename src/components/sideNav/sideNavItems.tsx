@@ -33,8 +33,8 @@ export const sideNavItems = [
 
     items: [
       {
-        link: '/reset-password',
-        name: 'Reset Password',
+        link: '/change-password',
+        name: 'Change Password',
       },
     ],
   },

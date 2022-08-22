@@ -29,7 +29,6 @@ const UserProvider: React.FC<Props> = ({ children }) => {
     const fetchUser = async () => {
       try {
         const { data } = await http.get('/api/v1/userInfo');
-        console.log(data);
         setUser({
           id: data.id,
           firstName: data.firstName,
