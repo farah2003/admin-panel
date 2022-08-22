@@ -7,7 +7,7 @@ const changePasswordSchema = Yup.object({
   ),
   newPassword: Yup.string()
     .min(6, 'Password must be at least 6 characters long')
-    .max(30, 'Password must be less than 20 characters long')
+    .max(30, 'Password must be less than 30 characters long')
     .when('oldPassword', (oldPassword, schema) => {
       return oldPassword
         ? schema.notOneOf(
