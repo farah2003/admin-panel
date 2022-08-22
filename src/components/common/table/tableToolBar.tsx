@@ -1,25 +1,21 @@
 import { Toolbar, Typography, Tooltip, IconButton } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
+import * as style from './style';
+import { TableInterface } from '../../../interfaces';
 
-import React from 'react';
-
-interface EnhancedTableToolbarProps {
-  numSelected: number;
-}
-const TableToolBar = ({ numSelected }: EnhancedTableToolbarProps) => {
+const TableToolBar = ({ numSelected }: TableInterface.TableToolbarProps) => {
   return (
     <Toolbar
       sx={{
-        pl: { sm: 2 },
-        pr: { xs: 1, sm: 1 },
-        // backgroundColor: ['primary.light'],
+        ...(numSelected > 0 && {
+          bgcolor: ['primary.light'],
+        }),
+        ...style.Toolbar,
       }}
     >
       {numSelected > 0 ? (
         <>
-          <Typography sx={{ flex: '1 1 100%' }} variant="subtitle1">
-            {numSelected} selected
-          </Typography>
+          <Typography sx={style.Typography}>{numSelected} selected</Typography>
           <Tooltip title="Delete">
             <IconButton>
               <DeleteIcon />
@@ -27,10 +23,10 @@ const TableToolBar = ({ numSelected }: EnhancedTableToolbarProps) => {
           </Tooltip>
         </>
       ) : (
-        <Typography sx={{ flex: '1 1 100%' }} variant="h6">
+        <Typography sx={style.Typography} variant="h6">
           Kits List
         </Typography>
-      )}{' '}
+      )}
     </Toolbar>
   );
 };
