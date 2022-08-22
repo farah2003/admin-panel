@@ -5,6 +5,7 @@ import { Kit } from './kits';
 import * as NavBarInterface from './navbar';
 import * as HeaderInterface from './header';
 import ChangePasswordI from './changePassword';
+import createAdminI from './createAdmin';
 
 export {
   User,
@@ -15,4 +16,5 @@ export {
   Kit,
   AddSingleKitI,
   ChangePasswordI,
+  createAdminI,
 };
