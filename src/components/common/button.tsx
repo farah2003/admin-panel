@@ -16,6 +16,7 @@ interface ButtonProps {
   children?: ReactNode;
   fullWidth?: boolean;
   type?: 'button' | 'submit' | 'reset';
+  customstyle?: object;
 }
 
 const Button = ({
@@ -24,6 +25,7 @@ const Button = ({
   children,
   fullWidth = false,
   type = 'button',
+  customstyle = buttonStyle,
 }: ButtonProps) => {
   return (
     <MaterialButton
@@ -32,7 +34,7 @@ const Button = ({
       variant="contained"
       fullWidth={fullWidth}
       type={type}
-      sx={buttonStyle}
+      sx={customstyle}
     >
       {children}
     </MaterialButton>

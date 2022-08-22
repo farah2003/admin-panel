@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from 'react';
 import {
   Box,
@@ -12,7 +13,16 @@ import TableBody from './tableBody';
 import * as style from './style';
 import { rows } from './fakeData';
 
-const GenericTable = () => {
+interface TableStyle {
+  width: string;
+  height: string;
+}
+const GenericTable = ({
+  tableStyle,
+  checkboxVisablity,
+  isEditable,
+  isDeleted,
+}: any) => {
   const [selected, setSelected] = useState<string[]>([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
@@ -23,7 +33,6 @@ const GenericTable = () => {
   ) => {
     const selectedIndex = selected.indexOf(name);
     let newSelected: string[] = [];
-
     if (selectedIndex === -1) {
       newSelected = newSelected.concat(selected, name);
     } else if (selectedIndex === 0) {
@@ -39,6 +48,7 @@ const GenericTable = () => {
 
     setSelected(newSelected);
   };
+
   const isSelected = (name: string) => {
     return selected.includes(name);
   };
@@ -54,7 +64,7 @@ const GenericTable = () => {
 
   const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.checked) {
-      const newSelected = rows.map((row) => row.name);
+      const newSelected = rows.map((row) => row.id);
       setSelected(newSelected);
       return;
     }
@@ -62,7 +72,7 @@ const GenericTable = () => {
   };
 
   return (
-    <Box sx={style.conatiner}>
+    <Box sx={{ ...style.conatiner, ...tableStyle }}>
       <Paper sx={style.paper} elevation={0}>
         <TableToolBar numSelected={selected.length} />
         <TableContainer sx={style.tableContainer}>
@@ -71,11 +81,17 @@ const GenericTable = () => {
               onSelectAllClick={handleSelectAllClick}
               numSelected={selected.length}
               rowCount={rows.length}
+              isEditable={isEditable}
+              checkboxVisablity={checkboxVisablity}
+              isDeleted={isDeleted}
             />
             <TableBody
               rows={rows}
               handleTableRowClick={handleTableRowClick}
               isSelected={isSelected}
+              isEditable={isEditable}
+              checkboxVisablity={checkboxVisablity}
+              isDeleted={isDeleted}
             />
           </Table>
         </TableContainer>

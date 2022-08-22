@@ -6,13 +6,28 @@ import { GenericTable } from './components/common/table';
 import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
+  const tableStyle = {
+    width: '100%',
+    height: '70%',
+  };
+
   return (
     <BrowserRouter>
       <ToastContainer />
       <Routes>
         <Route path="/" element={<Dashboard />}>
           <Route index element={<h1>charts</h1>} />
-          <Route path="view-kits" element={<GenericTable />} />
+          <Route
+            path="view-kits"
+            element={
+              <GenericTable
+                checkboxVisablity={false}
+                tableStyle={tableStyle}
+                isEditable={false}
+                isDeleted
+              />
+            }
+          />
           <Route path="add-kits" element={<h1>add-kits</h1>} />
           <Route path="reset-password" element={<h1>reset-password</h1>} />
           <Route path="add-admin" element={<h1>add-admin</h1>} />

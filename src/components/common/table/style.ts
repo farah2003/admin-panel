@@ -1,10 +1,6 @@
 export const conatiner = {
-  width: '100%',
-  height: '98%',
   mb: 2.5,
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'flex',
+
   borderRadius: {
     lg: '20px',
     xl: '20px',
@@ -17,6 +13,8 @@ export const paper = {
     lg: '20px',
     xl: '20px',
   },
+
+  height: '100%',
 };
 
 export const tablePagination = {
@@ -56,3 +54,7 @@ export const Toolbar = {
 export const Typography = {
   flex: '1 1 100%',
 };
+
+export const Edit = { width: 25, height: 35 };
+
+export const head = { backgroundColor: '#0000000a' };
