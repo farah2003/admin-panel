@@ -1,10 +1,11 @@
 import { useContext, useState } from 'react';
 import { Typography, CircularProgress } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 import { Button, Input } from '../../components';
 import { loginSchema } from '../../utils';
 import loginImage from '../../assets/loginLogo.png';
-import UserContext from '../../context/userContext';
+import { UserContext } from '../../context';
 import { http } from '../../services';
 import { LoginCredentials } from '../../interfaces';
 import './style.css';
@@ -13,6 +14,7 @@ const LoginPage = () => {
   const { setUser } = useContext(UserContext);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   const onSubmit = async (values: LoginCredentials) => {
     setLoading(true);
@@ -32,6 +34,7 @@ const LoginPage = () => {
       });
       setLoading(false);
       setError('');
+      navigate('/');
     } catch (e) {
       setLoading(false);
       setError('Invalid email or password');

@@ -17,6 +17,7 @@ interface ButtonProps {
   fullWidth?: boolean;
   type?: 'button' | 'submit' | 'reset';
   customstyle?: object;
+  disabled?: boolean;
 }
 
 const Button = ({
@@ -26,6 +27,7 @@ const Button = ({
   fullWidth = false,
   type = 'button',
   customstyle = buttonStyle,
+  disabled = false,
 }: ButtonProps) => {
   return (
     <MaterialButton
@@ -34,7 +36,8 @@ const Button = ({
       variant="contained"
       fullWidth={fullWidth}
       type={type}
-      sx={customstyle}
+      sx={{ ...customstyle, ...buttonStyle }}
+      disabled={disabled}
     >
       {children}
     </MaterialButton>

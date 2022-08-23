@@ -1,6 +1,6 @@
 export const layout = {
   display: 'flex',
-  flexDirection: 'column',
+
   height: '100vh',
   width: '100vw',
 };
@@ -32,7 +32,5 @@ export const content = {
   },
 
   display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
   backgroundColor: ['secondary.light'],
 };

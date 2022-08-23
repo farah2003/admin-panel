@@ -1,17 +1,18 @@
 import TextField from '@mui/material/TextField';
-import { ChangeEventHandler } from 'react';
+import { ChangeEventHandler, ReactNode } from 'react';
 import { inputStyle } from './commonStyle';
 
 interface InputProps {
   name?: string;
   id: string;
   fullWidth?: boolean;
-  label: string;
+  label?: string;
   type?: string;
-  value?: string;
+  value?: unknown;
   onChange?: ChangeEventHandler;
   error?: boolean | undefined;
-  helperText?: string | false | undefined;
+  helperText?: ReactNode;
+  hidden?: boolean;
 }
 
 const Input = ({
@@ -24,6 +25,7 @@ const Input = ({
   onChange,
   error,
   helperText,
+  hidden = false,
 }: InputProps) => {
   return (
     <TextField
@@ -37,6 +39,7 @@ const Input = ({
       error={error}
       helperText={helperText}
       sx={inputStyle}
+      hidden={hidden}
     />
   );
 };
