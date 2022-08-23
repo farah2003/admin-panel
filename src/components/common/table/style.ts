@@ -55,6 +55,6 @@ export const Typography = {
   flex: '1 1 100%',
 };
 
-export const Edit = { width: 25, height: 35 };
+export const Button = { width: 25, height: 35 };
 
-export const head = { backgroundColor: '#0000000a' };
+export const TableCell = { fontSize: '18px' };

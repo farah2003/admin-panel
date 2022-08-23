@@ -11,21 +11,24 @@ import TableToolBar from './tableToolBar';
 import TableHeader from './tableHeader';
 import TableBody from './tableBody';
 import * as style from './style';
-import { rows } from './fakeData';
+import { TableInterface } from '../../../interfaces';
 
-interface TableStyle {
-  width: string;
-  height: string;
-}
 const GenericTable = ({
   tableStyle,
-  checkboxVisablity,
   isEditable,
   isDeleted,
-}: any) => {
+  title,
+  rows,
+  checkboxSelection,
+  page,
+  setRowsPerPage,
+  rowsPerPage,
+  setPage,
+  count,
+  onDelete,
+  onEdit,
+}: TableInterface.GenericTable) => {
   const [selected, setSelected] = useState<string[]>([]);
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
 
   const handleTableRowClick = (
     event: React.MouseEvent<unknown>,
@@ -33,6 +36,9 @@ const GenericTable = ({
   ) => {
     const selectedIndex = selected.indexOf(name);
     let newSelected: string[] = [];
+    if (!checkboxSelection) {
+      return;
+    }
     if (selectedIndex === -1) {
       newSelected = newSelected.concat(selected, name);
     } else if (selectedIndex === 0) {
@@ -55,6 +61,7 @@ const GenericTable = ({
   const handleChangePage = (_: unknown, nextPage: number) => {
     setPage(nextPage);
   };
+
   const handleChangeRowsPerPage = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
@@ -64,7 +71,7 @@ const GenericTable = ({
 
   const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.checked) {
-      const newSelected = rows.map((row) => row.id);
+      const newSelected = rows.map((row: any) => row.id);
       setSelected(newSelected);
       return;
     }
@@ -74,31 +81,38 @@ const GenericTable = ({
   return (
     <Box sx={{ ...style.conatiner, ...tableStyle }}>
       <Paper sx={style.paper} elevation={0}>
-        <TableToolBar numSelected={selected.length} />
+        <TableToolBar
+          numSelected={selected.length}
+          title={title}
+          checkboxSelection={checkboxSelection}
+        />
         <TableContainer sx={style.tableContainer}>
-          <Table>
+          <Table stickyHeader>
             <TableHeader
               onSelectAllClick={handleSelectAllClick}
               numSelected={selected.length}
               rowCount={rows.length}
               isEditable={isEditable}
-              checkboxVisablity={checkboxVisablity}
+              checkboxSelection={checkboxSelection}
               isDeleted={isDeleted}
+              rows={rows}
             />
             <TableBody
               rows={rows}
               handleTableRowClick={handleTableRowClick}
               isSelected={isSelected}
               isEditable={isEditable}
-              checkboxVisablity={checkboxVisablity}
+              checkboxSelection={checkboxSelection}
               isDeleted={isDeleted}
+              onDelete={onDelete}
+              onEdit={onEdit}
             />
           </Table>
         </TableContainer>
         <TablePagination
           sx={style.tablePagination}
           rowsPerPageOptions={[10, 20, 50]}
-          count={rows.length}
+          count={count}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}

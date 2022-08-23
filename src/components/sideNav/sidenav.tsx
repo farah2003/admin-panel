@@ -13,6 +13,7 @@ const SideNav = ({ visible, setVisible }: NavBarInterface.ParentProps) => {
   const handleDrawerVisablity = () => {
     setVisible(false);
   };
+
   return (
     <div>
       <Drawer variant="persistent" open={visible} sx={style.drawer}>

@@ -3,17 +3,22 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import * as style from './style';
 import { TableInterface } from '../../../interfaces';
 
-const TableToolBar = ({ numSelected }: TableInterface.TableToolbarProps) => {
+const TableToolBar = ({
+  numSelected,
+  title,
+  checkboxSelection,
+}: TableInterface.TableToolbarProps) => {
   return (
     <Toolbar
       sx={{
-        ...(numSelected > 0 && {
-          bgcolor: ['primary.light'],
-        }),
+        ...(numSelected > 0 &&
+          checkboxSelection && {
+            bgcolor: ['primary.light'],
+          }),
         ...style.Toolbar,
       }}
     >
-      {numSelected > 0 ? (
+      {numSelected > 0 && checkboxSelection ? (
         <>
           <Typography sx={style.Typography}>{numSelected} selected</Typography>
           <Tooltip title="Delete">
@@ -23,8 +28,8 @@ const TableToolBar = ({ numSelected }: TableInterface.TableToolbarProps) => {
           </Tooltip>
         </>
       ) : (
-        <Typography sx={style.Typography} variant="h6">
-          Kits List
+        <Typography sx={style.Typography} variant="h6" color="primary">
+          {title}
         </Typography>
       )}
     </Toolbar>

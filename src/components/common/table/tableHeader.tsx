@@ -1,16 +1,6 @@
 import { TableHead, TableRow, TableCell, Checkbox } from '@mui/material';
-import React from 'react';
-import { headCells } from './headCells';
+import { TableInterface } from '../../../interfaces';
 import * as style from './style';
-
-interface TableHeaderProps {
-  numSelected: number;
-  onSelectAllClick: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  rowCount: number;
-  isEditable: boolean;
-  checkboxVisablity: boolean;
-  isDeleted: boolean;
-}
 
 const TableHeader = ({
   onSelectAllClick,
@@ -18,12 +8,14 @@ const TableHeader = ({
   rowCount,
   isEditable,
   isDeleted,
-  checkboxVisablity,
-}: TableHeaderProps) => {
+  checkboxSelection,
+  rows,
+}: TableInterface.TableHeaderProps) => {
+  const headCells = Object.keys(rows[0]);
   return (
-    <TableHead sx={style.head}>
+    <TableHead>
       <TableRow>
-        {checkboxVisablity && (
+        {checkboxSelection && (
           <TableCell padding="checkbox">
             <Checkbox
               color="primary"
@@ -33,11 +25,10 @@ const TableHeader = ({
             />
           </TableCell>
         )}
-        {headCells.map((headCell) => (
-          <TableCell sx={{ fontSize: '18px' }}>{headCell}</TableCell>
+        {headCells.slice(0, -1).map((headCell) => (
+          <TableCell sx={style.TableCell}>{headCell}</TableCell>
         ))}
-        {isEditable && <TableCell> </TableCell>}
-        {isDeleted && <TableCell> </TableCell>}
+        {(isEditable || isDeleted) && <TableCell />}
       </TableRow>
     </TableHead>
   );
