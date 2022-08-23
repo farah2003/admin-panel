@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import { Box, Typography, CircularProgress } from '@mui/material';
+import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import { FileUploader } from 'react-drag-drop-files';
 import * as xlsx from 'xlsx';
 import { Button } from '../../components';
@@ -12,6 +13,12 @@ const AddMultipleKits = () => {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const [disabled, setDisabled] = useState(true);
+  const [rows, setRows] = useState([]);
+  const columns: GridColDef[] = [
+    { field: 'code', headerName: 'QR Code', width: 400 },
+    { field: 'expirationDate', headerName: 'Expiration Date', width: 400 },
+    { field: 'kitType', headerName: 'Kit Type', width: 400 },
+  ];
 
   const handleChange = (file: File) => {
     const reader = new FileReader();
@@ -34,6 +41,8 @@ const AddMultipleKits = () => {
       }
 
       const kits: Array<Kit> = [];
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const tabelRows: any = [];
 
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       json.forEach((ele: any) => {
@@ -67,8 +76,15 @@ const AddMultipleKits = () => {
           expirationDate: ele['Expiration Date'],
           kitType: ele['Kit Type'],
         });
+        tabelRows.push({
+          code: ele['QR Code'],
+          expirationDate: ele['Expiration Date'],
+          kitType: ele['Kit Type'],
+          id: ele['QR Code'],
+        });
       });
       setUploadedKits(kits);
+      setRows(tabelRows);
       setLoading(false);
     };
     reader.readAsBinaryString(file);
@@ -113,7 +129,13 @@ const AddMultipleKits = () => {
         />
       </Box>
 
-      <Box sx={{ marginTop: '200px' }}>
+      {uploadedKits.length ? (
+        <Box sx={{ width: '100%', height: '400px', marginTop: '50px' }}>
+          <DataGrid columns={columns} rows={rows} pageSize={10} />
+        </Box>
+      ) : null}
+
+      <Box sx={{ marginTop: '10px' }}>
         <Button disabled={disabled} onClick={handleSubmit}>
           Upload file{' '}
         </Button>
