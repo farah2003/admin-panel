@@ -6,6 +6,7 @@ import AddMultipleKits from './AddMulitpleKits';
 import SideNav from './sideNav/sidenav';
 import Dashboard from './Dashbord/dashbord';
 import Header from './Header/header';
+import { GenericTable } from './common/table';
 
 export {
   Button,
@@ -13,6 +14,7 @@ export {
   SideNav,
   Dashboard,
   Header,
+  GenericTable,
   AddMultipleKits,
   AddSingleKit,
 };
