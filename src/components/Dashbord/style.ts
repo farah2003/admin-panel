@@ -1,6 +1,5 @@
 export const layout = {
   display: 'flex',
-
   height: '100vh',
   width: '100vw',
 };
@@ -31,6 +30,5 @@ export const content = {
     xl: '20px',
   },
 
-  display: 'flex',
   backgroundColor: ['secondary.light'],
 };
