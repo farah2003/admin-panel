@@ -1,24 +1,113 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Box, Typography, CircularProgress } from '@mui/material';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import CheckIcon from '@mui/icons-material/Check';
+import ClearIcon from '@mui/icons-material/Clear';
 import { useFormik } from 'formik';
 import { toast } from 'react-toastify';
+import { DataGrid, GridColDef } from '@mui/x-data-grid';
+import DeleteIcon from '@mui/icons-material/Delete';
 import { Button, Input } from '../../components';
 import { createAdminSchema } from '../../utils';
 import { http } from '../../services';
-import { createAdminI } from '../../interfaces';
+import { createAdminI, Admin } from '../../interfaces';
 import * as styles from './style';
 
 const AddAdmin = () => {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [apiLoading, setApiLoading] = useState(false);
+  const [admins, setAdmins] = useState<Admin[]>([]);
+  const [selectedAdminId, setSelectedAdminId] = useState(0);
+  const handleClickOpen = (id: number) => {
+    setSelectedAdminId(id);
+  };
+
+  const handleClose = () => {
+    setSelectedAdminId(0);
+  };
+
+  const deleteAdmin = async (id: number) => {
+    await http.delete(`api/v1/users/${id}`);
+    setAdmins(admins.filter((admin) => admin.id !== id));
+    setSelectedAdminId(0);
+  };
+
+  const columns: GridColDef[] = [
+    { field: 'email', headerName: 'Email', width: 300 },
+    { field: 'firstName', headerName: 'First Name', width: 300 },
+    { field: 'lastName', headerName: 'Last Name', width: 300 },
+    {
+      field: 'lastLogin',
+      headerName: 'Last Login',
+      width: 300,
+      valueFormatter: (params) => {
+        return new Date(params.value).toLocaleString();
+      },
+    },
+    { field: 'isActive', headerName: 'Is Active', width: 100 },
+    // delete button
+    {
+      field: 'delete',
+      headerName: 'Delete',
+      width: 150,
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      renderCell: (params: any) => {
+        return (
+          <DeleteIcon
+            color="error"
+            onClick={() => {
+              handleClickOpen(params.id);
+            }}
+            sx={{ cursor: 'pointer' }}
+          />
+        );
+      },
+    },
+  ];
+  useEffect(() => {
+    const getAdmins = async () => {
+      try {
+        setApiLoading(true);
+        const { data } = await http.get('/api/v1/admins');
+        setApiLoading(false);
+        setAdmins(data);
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    getAdmins();
+    return () => {
+      setApiLoading(false);
+      setAdmins([]);
+      http.source.cancel();
+    };
+  }, []);
 
   const onSubmit = async (values: createAdminI) => {
     setError('');
     setLoading(true);
     try {
-      await http.post('api/v1/createAdmin', values);
-      setLoading(false);
+      const {
+        data: { user },
+      } = await http.post('api/v1/createAdmin', values);
+      setLoading(user);
       toast.success('Admin created successfully');
+      setAdmins([
+        ...admins,
+        {
+          id: user.id,
+          email: user.email,
+          firstName: user.firstName,
+          lastName: user.lastName,
+          lastLogin: '',
+          isActive: true,
+        },
+      ]);
+      setLoading(false);
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (e: any) {
       setLoading(false);
@@ -112,6 +201,51 @@ const AddAdmin = () => {
             </Box>
           </Box>
         </form>
+      </Box>
+      <Dialog
+        open={!!selectedAdminId}
+        onClose={handleClose}
+        aria-labelledby="responsive-dialog-title"
+      >
+        <DialogContent>
+          <DialogContentText sx={{ fontSize: '20px' }}>
+            Are you sure you want to delete this admin?
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <CheckIcon
+            onClick={() => deleteAdmin(selectedAdminId)}
+            color="success"
+            sx={{ cursor: 'pointer' }}
+          />
+          <ClearIcon
+            onClick={handleClose}
+            color="error"
+            sx={{ cursor: 'pointer' }}
+          />
+        </DialogActions>
+      </Dialog>
+      <Typography color="primary" variant="h4" sx={styles.headerStyle}>
+        Admins List
+      </Typography>
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          marginTop: '20px',
+          height: '400px',
+          width: '96%',
+        }}
+      >
+        {apiLoading && <CircularProgress />}
+        {admins.length ? (
+          <DataGrid columns={columns} rows={admins} pageSize={5} />
+        ) : (
+          <Typography variant="h6" color="primary">
+            No admins found
+          </Typography>
+        )}
       </Box>
     </Box>
   );

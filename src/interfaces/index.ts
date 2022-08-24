@@ -7,6 +7,7 @@ import * as HeaderInterface from './header';
 import * as TableInterface from './table';
 import ChangePasswordI from './changePassword';
 import createAdminI from './createAdmin';
+import Admin from './admin';
 
 export {
   User,
@@ -19,4 +20,5 @@ export {
   AddSingleKitI,
   ChangePasswordI,
   createAdminI,
+  Admin,
 };
