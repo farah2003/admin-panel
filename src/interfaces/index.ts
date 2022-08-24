@@ -7,6 +7,7 @@ import * as HeaderInterface from './header';
 import ChangePasswordI from './changePassword';
 import createAdminI from './createAdmin';
 import * as viewKits from './viewKits';
+import Admin from './admin';
 
 export {
   User,
@@ -19,4 +20,5 @@ export {
   ChangePasswordI,
   createAdminI,
   viewKits,
+  Admin,
 };
