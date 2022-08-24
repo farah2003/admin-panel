@@ -1,6 +1,12 @@
 import { Routes, Route } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
-import { AddKits, LoginPage, ChangePassword, AddAdmin } from './pages';
+import {
+  AddKits,
+  LoginPage,
+  ChangePassword,
+  AddAdmin,
+  ViewKits,
+} from './pages';
 import { Dashboard } from './components';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -11,7 +17,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Dashboard />}>
           <Route index element={<h1>charts</h1>} />
-          <Route path="view-kits" element={<h1>view-kits</h1>} />
+          <Route path="view-kits" element={<ViewKits />} />
           <Route path="add-kits" element={<AddKits />} />
           <Route path="change-password" element={<ChangePassword />} />
           <Route path="add-admin" element={<AddAdmin />} />
