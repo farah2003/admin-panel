@@ -5,6 +5,7 @@ import { useFormik } from 'formik';
 import { Button, Input } from '../../components';
 import { loginSchema } from '../../utils';
 import loginImage from '../../assets/loginLogo.png';
+import loginImageWhite from '../../assets/loginLogoWhite.png';
 import { UserContext } from '../../context';
 import { http } from '../../services';
 import { LoginCredentials } from '../../interfaces';
@@ -81,7 +82,13 @@ const LoginPage = () => {
             helperText={formik.touched.password && formik.errors.password}
             fullWidth
           />
-          <button type="button" className="forget-password-btn">
+          <button
+            type="button"
+            className="forget-password-btn"
+            onClick={() => {
+              navigate('/forgot-password');
+            }}
+          >
             Reset password
           </button>
           <Button color="primary" type="submit" fullWidth>
@@ -100,7 +107,7 @@ const LoginPage = () => {
         </form>
       </div>
       <div className="login-image-container">
-        <img src={loginImage} alt="logo" className="login-image" />
+        <img src={loginImageWhite} alt="logo" className="login-image" />
       </div>
     </div>
   );

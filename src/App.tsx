@@ -1,6 +1,12 @@
 import { Routes, Route } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
-import { AddKits, LoginPage, ChangePassword, AddAdmin } from './pages';
+import {
+  AddKits,
+  LoginPage,
+  ChangePassword,
+  AddAdmin,
+  ForgotPassword,
+} from './pages';
 import { Dashboard } from './components';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -18,6 +24,7 @@ function App() {
           <Route path="logout" element={<h1>logout</h1>} />
         </Route>
         <Route path="login" element={<LoginPage />} />
+        <Route path="forgot-password" element={<ForgotPassword />} />
       </Routes>
     </>
   );
