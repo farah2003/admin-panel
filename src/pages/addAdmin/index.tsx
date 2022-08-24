@@ -70,14 +70,10 @@ const AddAdmin = () => {
   ];
   useEffect(() => {
     const getAdmins = async () => {
-      try {
-        setApiLoading(true);
-        const { data } = await http.get('/api/v1/admins');
-        setApiLoading(false);
-        setAdmins(data);
-      } catch (e) {
-        console.log(e);
-      }
+      setApiLoading(true);
+      const { data } = await http.get('/api/v1/admins');
+      setApiLoading(false);
+      setAdmins(data);
     };
     getAdmins();
     return () => {
