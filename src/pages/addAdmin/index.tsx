@@ -235,13 +235,14 @@ const AddAdmin = () => {
         }}
       >
         {apiLoading && <CircularProgress />}
-        {admins.length ? (
-          <DataGrid columns={columns} rows={admins} pageSize={5} />
-        ) : (
-          <Typography variant="h6" color="primary">
-            No admins found
-          </Typography>
-        )}
+        {!apiLoading &&
+          (admins.length ? (
+            <DataGrid columns={columns} rows={admins} pageSize={5} />
+          ) : (
+            <Typography variant="h6" color="primary">
+              No admins found
+            </Typography>
+          ))}
       </Box>
     </Box>
   );

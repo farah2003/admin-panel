@@ -3,5 +3,6 @@ import AddKits from './addKits/addKits';
 import ChangePassword from './changePassword/changePassword';
 import AddAdmin from './addAdmin';
 import ViewKits from './viewKits';
+import Charts from './dashboard';
 
-export { LoginPage, AddKits, ChangePassword, AddAdmin, ViewKits };
+export { LoginPage, AddKits, ChangePassword, AddAdmin, ViewKits, Charts };

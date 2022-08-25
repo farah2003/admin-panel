@@ -5,6 +5,7 @@ import {
   LoginPage,
   ChangePassword,
   AddAdmin,
+  Charts,
   ViewKits,
 } from './pages';
 import { Dashboard } from './components';
@@ -16,7 +17,7 @@ function App() {
       <ToastContainer />
       <Routes>
         <Route path="/" element={<Dashboard />}>
-          <Route index element={<h1>charts</h1>} />
+          <Route index element={<Charts />} />
           <Route path="view-kits" element={<ViewKits />} />
           <Route path="add-kits" element={<AddKits />} />
           <Route path="change-password" element={<ChangePassword />} />
