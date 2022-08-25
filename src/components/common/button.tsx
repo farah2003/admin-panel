@@ -26,7 +26,7 @@ const Button = ({
   children,
   fullWidth = false,
   type = 'button',
-  customstyle = buttonStyle,
+  customstyle,
   disabled = false,
 }: ButtonProps) => {
   return (
@@ -36,7 +36,7 @@ const Button = ({
       variant="contained"
       fullWidth={fullWidth}
       type={type}
-      sx={{ ...customstyle, ...buttonStyle }}
+      sx={{ ...buttonStyle, ...customstyle }}
       disabled={disabled}
     >
       {children}

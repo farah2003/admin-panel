@@ -13,6 +13,8 @@ interface InputProps {
   error?: boolean | undefined;
   helperText?: ReactNode;
   hidden?: boolean;
+  customstyle?: object;
+  readOnly?: boolean;
 }
 
 const Input = ({
@@ -26,6 +28,8 @@ const Input = ({
   error,
   helperText,
   hidden = false,
+  customstyle,
+  readOnly,
 }: InputProps) => {
   return (
     <TextField
@@ -38,8 +42,11 @@ const Input = ({
       onChange={onChange}
       error={error}
       helperText={helperText}
-      sx={inputStyle}
+      sx={{ ...inputStyle, ...customstyle }}
       hidden={hidden}
+      InputProps={{
+        readOnly,
+      }}
     />
   );
 };
