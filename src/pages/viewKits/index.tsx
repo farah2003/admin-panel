@@ -3,6 +3,7 @@ import { DataGrid, GridColDef, GridSelectionModel } from '@mui/x-data-grid';
 import { Button, Toolbar, Typography } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { AxiosResponse } from 'axios';
+import _ from 'lodash';
 import * as style from './style';
 import { viewKits } from '../../interfaces';
 import { http } from '../../services';
@@ -14,11 +15,11 @@ const ViewKits = () => {
   const [totalCount, setTotalCount] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [selectedRows, setSelectedRows] = useState<Array<viewKits.rowI>>([]);
+  const [selectedRows, setSelectedRows] = useState<Array<number>>([]);
+  const [isDeleted, setIsDeleted] = useState(false);
   interface res extends AxiosResponse {
     count: number;
   }
-
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -38,10 +39,25 @@ const ViewKits = () => {
       }
     };
     fetchData();
-  }, [rowsPerPage, page]);
+    return () => http.source.cancel();
+  }, [rowsPerPage, page, isDeleted]);
+
   const handleSelectId = (ids: GridSelectionModel) => {
     const selected = rows.filter((row: viewKits.rowI) => ids.includes(row.id));
-    setSelectedRows(selected);
+    const newKit = selected.map((item) => {
+      return item.id;
+    });
+    setSelectedRows(newKit);
+  };
+  const handleDeleteKit = async () => {
+    try {
+      await http.post(`api/v1/delete-kits`, {
+        kitsId: selectedRows,
+      });
+      setIsDeleted(!isDeleted);
+    } catch (e) {
+      console.log(e);
+    }
   };
   const columns: GridColDef[] = [
     {
@@ -80,11 +96,17 @@ const ViewKits = () => {
   ];
   return (
     <>
-      <Toolbar sx={{ dispaly: 'flex', justifyContent: 'space-between' }}>
+      <Toolbar sx={style.toolbar}>
         <Typography variant="h6" color="primary">
           Kit List
         </Typography>
-        {selectedRows.length ? <DeleteIcon color="primary" /> : null}
+        {selectedRows.length ? (
+          <DeleteIcon
+            color="primary"
+            sx={style.deleteIcon}
+            onClick={() => handleDeleteKit()}
+          />
+        ) : null}
       </Toolbar>
       <DataGrid
         rows={rows}
