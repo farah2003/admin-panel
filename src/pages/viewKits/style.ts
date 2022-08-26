@@ -16,3 +16,7 @@ export const errorBox = {
   fontSize: 22,
   color: ['error.main'],
 };
+
+export const toolbar = { dispaly: 'flex', justifyContent: 'space-between' };
+
+export const deleteIcon = { cursor: 'pointer' };

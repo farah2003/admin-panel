@@ -6,6 +6,7 @@ import AddMultipleKits from './AddMulitpleKits';
 import SideNav from './sideNav/sidenav';
 import Dashboard from './Dashbord/dashbord';
 import Header from './Header/header';
+import Modal from './modal';
 
 export {
   Button,
@@ -15,4 +16,5 @@ export {
   Header,
   AddMultipleKits,
   AddSingleKit,
+  Modal,
 };
