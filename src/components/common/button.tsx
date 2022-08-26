@@ -36,7 +36,7 @@ const Button = ({
       variant="contained"
       fullWidth={fullWidth}
       type={type}
-      sx={{ ...customstyle, ...buttonStyle }}
+      sx={{ ...buttonStyle, ...customstyle }}
       disabled={disabled}
     >
       {children}

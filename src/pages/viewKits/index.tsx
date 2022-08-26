@@ -1,12 +1,12 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useState } from 'react';
 import { DataGrid, GridColDef, GridSelectionModel } from '@mui/x-data-grid';
 import { Button, Toolbar, Typography } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { AxiosResponse } from 'axios';
-import _ from 'lodash';
 import * as style from './style';
-import { viewKits } from '../../interfaces';
+import { viewKits, responseI } from '../../interfaces';
 import { http } from '../../services';
+import { Modal } from '../../components';
 
 const ViewKits = () => {
   const [rows, setRows] = useState<Array<viewKits.rowI>>([]);
@@ -15,21 +15,19 @@ const ViewKits = () => {
   const [totalCount, setTotalCount] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [selectedRows, setSelectedRows] = useState<Array<number>>([]);
+  const [opne, setOpen] = useState(false);
   const [isDeleted, setIsDeleted] = useState(false);
-  interface res extends AxiosResponse {
-    count: number;
-  }
+  const [selectedRowsId, setSelectedRowsId] = useState<GridSelectionModel>([]);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const { count, data }: res = await http.get(
+        const { count, data }: responseI = await http.get(
           `api/v1/kits?page=${page}&limit=${rowsPerPage}`
         );
         setTotalCount(count);
         setRows(data);
         setIsLoading(false);
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (e: any) {
         setIsLoading(false);
         if (e.response.data.message) {
@@ -43,22 +41,32 @@ const ViewKits = () => {
   }, [rowsPerPage, page, isDeleted]);
 
   const handleSelectId = (ids: GridSelectionModel) => {
-    const selected = rows.filter((row: viewKits.rowI) => ids.includes(row.id));
-    const newKit = selected.map((item) => {
-      return item.id;
-    });
-    setSelectedRows(newKit);
+    setSelectedRowsId(ids);
   };
   const handleDeleteKit = async () => {
     try {
       await http.post(`api/v1/delete-kits`, {
-        kitsId: selectedRows,
+        kitsId: selectedRowsId,
       });
       setIsDeleted(!isDeleted);
+      setOpen(false);
     } catch (e) {
       console.log(e);
     }
   };
+
+  const handleClose = () => {
+    setOpen(false);
+    setSelectedRowsId([]);
+  };
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+  const handlePageSizeChange = (newPageSize: number) => {
+    setRowsPerPage(newPageSize);
+  };
+  const handlePageChange = (newPage: number) => setPage(newPage);
   const columns: GridColDef[] = [
     {
       field: 'code',
@@ -71,17 +79,17 @@ const ViewKits = () => {
       width: 300,
     },
     {
-      field: 'KitType',
+      field: 'kitType',
       headerName: 'Kit Type',
       width: 150,
     },
     {
-      field: 'Createdby',
+      field: 'createdBy',
       headerName: 'Created By',
       width: 300,
     },
     {
-      field: 'UpdatedBy',
+      field: 'updatedBy',
       headerName: 'Updated By',
       width: 300,
     },
@@ -100,11 +108,11 @@ const ViewKits = () => {
         <Typography variant="h6" color="primary">
           Kit List
         </Typography>
-        {selectedRows.length ? (
+        {selectedRowsId.length ? (
           <DeleteIcon
             color="primary"
             sx={style.deleteIcon}
-            onClick={() => handleDeleteKit()}
+            onClick={() => handleOpen()}
           />
         ) : null}
       </Toolbar>
@@ -114,11 +122,9 @@ const ViewKits = () => {
         sx={style.DataGrid}
         checkboxSelection
         pagination
-        onPageSizeChange={(newPageSize) => {
-          setRowsPerPage(newPageSize);
-        }}
+        onPageSizeChange={handlePageSizeChange}
         page={page}
-        onPageChange={(newPage) => setPage(newPage)}
+        onPageChange={handlePageChange}
         rowsPerPageOptions={[10, 20, 50]}
         pageSize={rowsPerPage}
         rowCount={totalCount}
@@ -129,6 +135,13 @@ const ViewKits = () => {
         disableColumnMenu
         error={error}
         onSelectionModelChange={(ids) => handleSelectId(ids)}
+        selectionModel={selectedRowsId}
+      />
+      <Modal
+        open={opne}
+        handleConfirm={() => handleDeleteKit()}
+        handleClose={() => handleClose()}
+        message="Are you sure you want to delete kits"
       />
     </>
   );

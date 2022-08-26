@@ -1,16 +1,11 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState, useEffect } from 'react';
-import { Box, Typography, CircularProgress } from '@mui/material';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import CheckIcon from '@mui/icons-material/Check';
-import ClearIcon from '@mui/icons-material/Clear';
 import { useFormik } from 'formik';
 import { toast } from 'react-toastify';
+import { Box, Typography, CircularProgress } from '@mui/material';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { Button, Input } from '../../components';
+import { Button, Input, Modal } from '../../components';
 import { createAdminSchema } from '../../utils';
 import { http } from '../../services';
 import { createAdminI, Admin } from '../../interfaces';
@@ -49,12 +44,10 @@ const AddAdmin = () => {
       },
     },
     { field: 'isActive', headerName: 'Is Active', width: 100 },
-    // delete button
     {
       field: 'delete',
       headerName: 'Delete',
       width: 150,
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       renderCell: (params: any) => {
         return (
           <DeleteIcon
@@ -104,7 +97,6 @@ const AddAdmin = () => {
         },
       ]);
       setLoading(false);
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (e: any) {
       setLoading(false);
       if (e.response.data.message) {
@@ -198,42 +190,17 @@ const AddAdmin = () => {
           </Box>
         </form>
       </Box>
-      <Dialog
+      <Modal
+        handleClose={handleClose}
         open={!!selectedAdminId}
-        onClose={handleClose}
-        aria-labelledby="responsive-dialog-title"
-      >
-        <DialogContent>
-          <DialogContentText sx={{ fontSize: '20px' }}>
-            Are you sure you want to delete this admin?
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <CheckIcon
-            onClick={() => deleteAdmin(selectedAdminId)}
-            color="success"
-            sx={{ cursor: 'pointer' }}
-          />
-          <ClearIcon
-            onClick={handleClose}
-            color="error"
-            sx={{ cursor: 'pointer' }}
-          />
-        </DialogActions>
-      </Dialog>
+        message="Are you sure you want to delete this admin?"
+        handleConfirm={() => deleteAdmin(selectedAdminId)}
+      />
+
       <Typography color="primary" variant="h4" sx={styles.headerStyle}>
         Admins List
       </Typography>
-      <Box
-        sx={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          marginTop: '20px',
-          height: '400px',
-          width: '96%',
-        }}
-      >
+      <Box sx={styles.TableContainer}>
         {apiLoading && <CircularProgress />}
         {admins.length ? (
           <DataGrid columns={columns} rows={admins} pageSize={5} />
