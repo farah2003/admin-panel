@@ -1,23 +1,44 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useState } from 'react';
 import { DataGrid, GridColDef, GridSelectionModel } from '@mui/x-data-grid';
-import { Button, Toolbar, Typography } from '@mui/material';
+import {
+  Dialog,
+  DialogActions,
+  DialogTitle,
+  Box,
+  Toolbar,
+  Typography,
+  Button,
+  DialogContent,
+} from '@mui/material';
+import { useFormik } from 'formik';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { toast } from 'react-toastify';
+import MaterialButton from '../../components/common/button';
 import * as style from './style';
 import { viewKits, responseI } from '../../interfaces';
 import { http } from '../../services';
-import { Modal } from '../../components';
+import { Input, Modal } from '../../components';
+import { editKitSchema } from '../../utils/validation';
 
 const ViewKits = () => {
   const [rows, setRows] = useState<Array<viewKits.rowI>>([]);
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
-  const [totalCount, setTotalCount] = useState(0);
-  const [isLoading, setIsLoading] = useState(true);
+  const [page, setPage] = useState<number>(0);
+  const [rowsPerPage, setRowsPerPage] = useState<number>(10);
+  const [totalCount, setTotalCount] = useState<number>(0);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState(null);
   const [opne, setOpen] = useState(false);
   const [isDeleted, setIsDeleted] = useState(false);
   const [selectedRowsId, setSelectedRowsId] = useState<GridSelectionModel>([]);
+  const [openEditModal, setOpenEditModal] = useState(false);
+  const [isUpdated, setIsUpdated] = useState(false);
+  const [editError, setEditError] = useState(null);
+  const [editedRow, setEditedRow] = useState({
+    code: '',
+    kitType: '',
+    expirationDate: '',
+  });
 
   useEffect(() => {
     const fetchData = async () => {
@@ -38,7 +59,7 @@ const ViewKits = () => {
     };
     fetchData();
     return () => http.source.cancel();
-  }, [rowsPerPage, page, isDeleted]);
+  }, [rowsPerPage, page, isDeleted, isUpdated]);
 
   const handleSelectId = (ids: GridSelectionModel) => {
     setSelectedRowsId(ids);
@@ -50,8 +71,12 @@ const ViewKits = () => {
       });
       setIsDeleted(!isDeleted);
       setOpen(false);
-    } catch (e) {
-      console.log(e);
+    } catch (e: any) {
+      if (e.response.data.message) {
+        setError(e.response.data.message);
+        return;
+      }
+      setError(e.response.data);
     }
   };
 
@@ -97,13 +122,116 @@ const ViewKits = () => {
       field: 'Edit',
       headerName: '',
       width: 100,
-      renderCell: () => {
-        return <Button sx={style.Button}>Edit</Button>;
+      renderCell: (params) => {
+        return (
+          <Button
+            sx={style.Button}
+            onClick={() => {
+              setOpenEditModal(true);
+              setEditedRow(params.row);
+            }}
+          >
+            Edit
+          </Button>
+        );
       },
     },
   ];
+  const onSubmit = async ({ expirationDate, id }: any) => {
+    try {
+      await http.patch('api/v1/kits', {
+        id,
+        expirationDate,
+      });
+      toast.success('Kit edited sucessfully');
+      setOpenEditModal(false);
+      setIsUpdated(!isUpdated);
+    } catch (e: any) {
+      if (e.response.data.message) {
+        setEditError(e.response.data.message);
+        return;
+      }
+      setEditError(e.response.data);
+    }
+  };
+
+  const formik = useFormik({
+    enableReinitialize: true,
+    initialValues: editedRow,
+    validationSchema: editKitSchema,
+    onSubmit,
+  });
+
   return (
     <>
+      <Dialog open={openEditModal}>
+        <DialogContent sx={style.DialogContent}>
+          <Box sx={style.ItemContainer}>
+            <>
+              <DialogTitle sx={style.DialogTitle}>Edit Kits</DialogTitle>
+
+              <Box sx={style.InputContainer}>
+                <form onSubmit={formik.handleSubmit}>
+                  <Input
+                    fullWidth
+                    label="QR Code"
+                    id="code"
+                    customstyle={style.Input}
+                    value={formik.values.code}
+                    onChange={formik.handleChange}
+                    readOnly
+                  />
+
+                  <Input
+                    fullWidth
+                    label="Kit Type"
+                    id="kitType"
+                    customstyle={style.Input}
+                    value={formik.values.kitType}
+                    onChange={formik.handleChange}
+                    readOnly
+                  />
+                  <Input
+                    fullWidth
+                    type="date"
+                    label="Expiration Date"
+                    id="expirationDate"
+                    customstyle={style.Input}
+                    value={formik.values.expirationDate}
+                    onChange={formik.handleChange}
+                    error={
+                      formik.touched.expirationDate &&
+                      !!formik.errors.expirationDate
+                    }
+                    helperText={
+                      formik.touched.expirationDate &&
+                      formik.errors.expirationDate
+                    }
+                  />
+                  {editError && (
+                    <Typography
+                      variant="body1"
+                      sx={{ marginTop: '10px' }}
+                      color="error"
+                    >
+                      {error}
+                    </Typography>
+                  )}
+                  <DialogActions>
+                    <MaterialButton
+                      color="primary"
+                      type="submit"
+                      customstyle={style.EditButton}
+                    >
+                      EDIT
+                    </MaterialButton>
+                  </DialogActions>
+                </form>
+              </Box>
+            </>
+          </Box>
+        </DialogContent>
+      </Dialog>
       <Toolbar sx={style.toolbar}>
         <Typography variant="h6" color="primary">
           Kit List

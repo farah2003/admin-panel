@@ -1,4 +1,4 @@
-export const pageContainer = { p: 4 };
+export const pageContainer = { pl: 4, pt: 2, pr: 4 };
 export const inputContainer = {
   width: { xl: 400, lg: 250, md: 200, sm: '100%', xs: '100%' },
   display: 'flex',
@@ -12,8 +12,7 @@ export const inputLabel = {
 export const formContainer = {
   display: 'flex',
   justifyContent: 'space-between',
-
-  paddingRight: { xl: 15, lg: 5, md: 5, sm: 0, xs: 0 },
+  paddingRight: { xl: 0, lg: 0, md: 5, sm: 0, xs: 0 },
   flexDirection: {
     xl: 'row',
     lg: 'row',
@@ -30,7 +29,7 @@ export const buttonContainer = {
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
-  width: { xl: '150px', lg: '150px', md: '150px', sm: '100%', xs: '100%' },
+  width: { xl: '250px', lg: '150px', md: '150px', sm: '100%', xs: '100%' },
 };
 export const messagesContainer = {
   display: 'flex',
@@ -41,15 +40,31 @@ export const messagesContainer = {
     sm: 'flex-start',
     xs: 'flex-start',
   },
-  paddingRight: { xl: 15, lg: 5, md: 5, sm: 0, xs: 0 },
-  marginTop: '20px',
+  paddingRight: { xl: 0, lg: 0, md: 5, sm: 0, xs: 0 },
+  marginTop: '55px',
 };
 
 export const TableContainer = {
+  padding: '0 2%',
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
-  marginTop: '20px',
-  height: '400px',
-  width: '96%',
+  marginTop: '3px',
+  height: '450px',
+  width: '100%',
+  borderRaduis: '5px',
+};
+
+export const Button = {
+  fontSize: '18px',
+};
+
+export const toolbar = {
+  dispaly: 'flex',
+  justifyContent: 'space-between',
+  marginLeft: '1%',
+};
+
+export const DataGrid = {
+  fontSize: '18px',
 };

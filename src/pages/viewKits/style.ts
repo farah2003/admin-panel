@@ -20,3 +20,22 @@ export const errorBox = {
 export const toolbar = { dispaly: 'flex', justifyContent: 'space-between' };
 
 export const deleteIcon = { cursor: 'pointer' };
+
+export const DialogContent = { padding: 0, marginTop: '5%' };
+
+export const ItemContainer = {
+  height: '500px',
+  width: '91%',
+  paddingLeft: '8%',
+};
+
+export const DialogTitle = {
+  color: ['primary.main'],
+  backgroundColor: 'white',
+};
+
+export const EditButton = { width: '100%', padding: '10px' };
+
+export const InputContainer = { padding: '20px', height: '200px' };
+
+export const Input = { marginBottom: '45px' };
