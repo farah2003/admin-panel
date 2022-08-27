@@ -48,7 +48,7 @@
 
 @media (max-width: 1250px) and (min-width: 888px) {
   .login-image-container {
-    background-size: 80%;
+    background-size: 70%;
   }
 }
 
@@ -64,6 +64,7 @@
     width: 100%;
   }
   .login-image-container {
+    background-size: 70%;
     width: 100%;
     height: 25%;
     background-color: white;
@@ -71,8 +72,8 @@
   }
 }
 @media screen and (max-width: 858px) and (min-width: 567px) {
-  .login-image {
-    width: 50%;
+  .login-image-container {
+    background-size: 80%;
   }
   .forgot-password-form {
     margin-top: 100px;

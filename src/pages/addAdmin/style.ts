@@ -44,3 +44,12 @@ export const messagesContainer = {
   paddingRight: { xl: 15, lg: 5, md: 5, sm: 0, xs: 0 },
   marginTop: '20px',
 };
+
+export const TableContainer = {
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  marginTop: '20px',
+  height: '400px',
+  width: '96%',
+};
