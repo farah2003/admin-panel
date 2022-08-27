@@ -5,6 +5,7 @@ import {
   LoginPage,
   ChangePassword,
   AddAdmin,
+  ForgotPassword,
   ViewKits,
 } from './pages';
 import { Dashboard } from './components';
@@ -24,6 +25,7 @@ function App() {
           <Route path="logout" element={<h1>logout</h1>} />
         </Route>
         <Route path="login" element={<LoginPage />} />
+        <Route path="forgot-password" element={<ForgotPassword />} />
       </Routes>
     </>
   );
