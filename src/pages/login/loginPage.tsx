@@ -12,7 +12,7 @@ import { LoginCredentials } from '../../interfaces';
 import './style.css';
 
 const LoginPage = () => {
-  const { setUser } = useContext(UserContext);
+  const { user, setUser } = useContext(UserContext);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -44,7 +44,7 @@ const LoginPage = () => {
 
   const formik = useFormik({
     initialValues: {
-      email: '',
+      email: user.email || '',
       password: '',
     },
     validationSchema: loginSchema,
@@ -106,9 +106,7 @@ const LoginPage = () => {
           {loading && <CircularProgress sx={{ marginTop: '20px' }} />}
         </form>
       </div>
-      <div className="login-image-container">
-        <img src={loginImageWhite} alt="logo" className="login-image" />
-      </div>
+      <div className="login-image-container" />
     </div>
   );
 };

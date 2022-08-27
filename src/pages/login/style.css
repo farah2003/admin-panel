@@ -61,7 +61,8 @@
   .login-image-container {
     width: 100%;
     height: 25%;
-    background: none;
+    background-color: white;
+    background-image: url(../../assets/loginLogo.png);
   }
 }
 @media screen and (max-width: 858px) and (min-width: 567px) {

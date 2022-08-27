@@ -1,31 +1,34 @@
 import { useContext, useState } from 'react';
 import { Typography, CircularProgress, Box } from '@mui/material';
 import Stepper from '@mui/material/Stepper';
+import { toast } from 'react-toastify';
 import Step from '@mui/material/Step';
 import StepButton from '@mui/material/StepButton';
 import * as yup from 'yup';
 import { useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
+import * as styles from './styles';
 import { Button, Input } from '../../components';
-import loginImage from '../../assets/loginLogo.png';
-import { UserContext } from '../../context';
 import { http } from '../../services';
-import { LoginCredentials } from '../../interfaces';
+import { UserContext } from '../../context';
 import loginImageWhite from '../../assets/loginLogoWhite.png';
 import './style.css';
 
 const ForgotPassword = () => {
+  const { user, setUser } = useContext(UserContext);
+  const navigate = useNavigate();
   const steps = [
     'Enter your email',
     'Enter confirmation code',
     'Enter new password',
   ];
   const [activeStep, setActiveStep] = useState(0);
-  const [firstError, setFirstError] = useState('');
-  const [firstLoading, setFirstLoading] = useState(false);
-  const [secondError, setSecondError] = useState('');
-  const [secondLoading, setSecondLoading] = useState(false);
-  const [email, setEmail] = useState('');
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [userInfo, setUserInfo] = useState({
+    userEmail: '',
+    confirmationCode: '',
+  });
   const [completed, setCompleted] = useState<{
     [k: number]: boolean;
   }>({});
@@ -56,14 +59,6 @@ const ForgotPassword = () => {
     setActiveStep(newActiveStep);
   };
 
-  const handleBack = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep - 1);
-  };
-
-  const handleStep = (step: number) => () => {
-    setActiveStep(step);
-  };
-
   const handleComplete = () => {
     const newCompleted = completed;
     newCompleted[activeStep] = true;
@@ -72,21 +67,26 @@ const ForgotPassword = () => {
   };
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const sumbitFirstStep: any = async (values: { email: string }) => {
-    setFirstLoading(true);
+    setError('');
+    setLoading(true);
     console.log(values);
     try {
-      // await http.post('api/v1/email-confirmation', values);
-      setEmail(values.email);
-      setFirstLoading(false);
+      await http.post('api/v1/email-confirmation', values);
+      setUserInfo({
+        ...userInfo,
+        userEmail: values.email,
+      });
+      setLoading(false);
+      setError('');
       handleComplete();
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (e: any) {
-      setFirstLoading(false);
+      setLoading(false);
       if (e.response.data.message) {
-        setFirstError(e.response.data.message);
+        setError(e.response.data.message);
         return;
       }
-      setFirstError(e.response.data);
+      setError(e.response.data);
     }
   };
   const firstStepSchema = yup.object().shape({
@@ -100,23 +100,82 @@ const ForgotPassword = () => {
     onSubmit: sumbitFirstStep,
   });
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const sumbitSecondStep: any = async (values: { confirmatioCode: string }) => {
-    setSecondLoading(true);
-    handleComplete();
-  };
   const secondStepSchema = yup.object().shape({
-    confirmatioCode: yup
-      .string()
-      .length(6, 'confirmation code should be 6 numbers')
-      .required(),
+    confirmationCode: yup.string().required().length(6, 'Must be 6 characters'),
   });
+  const submitSecondStep = async (values: { confirmationCode: string }) => {
+    setError('');
+    setLoading(true);
+    try {
+      console.log(values);
+      await http.post('api/v1/verify-confirmation-code', {
+        email: userInfo.userEmail,
+        confirmationCode: values.confirmationCode,
+      });
+      setLoading(false);
+      setError('');
+      setUserInfo({
+        ...userInfo,
+        confirmationCode: values.confirmationCode,
+      });
+      handleComplete();
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (e: any) {
+      setLoading(false);
+      if (e.response.data.message) {
+        setError(e.response.data.message);
+        return;
+      }
+      setError(e.response.data);
+    }
+  };
   const secondStepFormik = useFormik({
     initialValues: {
       confirmationCode: '',
     },
     validationSchema: secondStepSchema,
-    onSubmit: sumbitSecondStep,
+    onSubmit: submitSecondStep,
+  });
+
+  const thirdStepSchema = yup.object().shape({
+    password: yup.string().required().min(6, 'Must be 8 characters'),
+  });
+  const submitThirdStep = async (values: { password: string }) => {
+    setError('');
+    setLoading(true);
+    try {
+      console.log(values);
+      await http.post('api/v1/change-password', {
+        email: userInfo.userEmail,
+        confirmationCode: userInfo.confirmationCode,
+        password: values.password,
+      });
+
+      setLoading(false);
+      setError('');
+      handleComplete();
+      setUser({
+        ...user,
+        email: userInfo.userEmail,
+      });
+      toast.success('Password changed successfully');
+      navigate('/login');
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (e: any) {
+      setLoading(false);
+      if (e.response.data.message) {
+        setError(e.response.data.message);
+        return;
+      }
+      setError(e.response.data);
+    }
+  };
+  const thirdStepFormik = useFormik({
+    initialValues: {
+      password: '',
+    },
+    validationSchema: thirdStepSchema,
+    onSubmit: submitThirdStep,
   });
 
   return (
@@ -154,21 +213,7 @@ const ForgotPassword = () => {
                   onSubmit={firstStepFormik.handleSubmit}
                   className="forgot-password-form-container"
                 >
-                  <Box
-                    sx={{
-                      width: {
-                        xl: 400,
-                        lg: 400,
-                        md: '100%',
-                        sm: '100%',
-                        xs: '100%',
-                      },
-                      display: 'flex',
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      flexDirection: 'column',
-                    }}
-                  >
+                  <Box sx={styles.formContainer}>
                     <Typography
                       variant="h5"
                       sx={{
@@ -198,18 +243,16 @@ const ForgotPassword = () => {
                     <Button color="primary" type="submit" fullWidth>
                       Next
                     </Button>
-                    {firstError && (
+                    {error && (
                       <Typography
                         variant="body1"
                         sx={{ marginTop: '10px' }}
                         color="error"
                       >
-                        {firstError}
+                        {error}
                       </Typography>
                     )}
-                    {firstLoading && (
-                      <CircularProgress sx={{ marginTop: '20px' }} />
-                    )}
+                    {loading && <CircularProgress sx={{ marginTop: '20px' }} />}
                   </Box>
                 </form>
               </div>
@@ -220,21 +263,7 @@ const ForgotPassword = () => {
                   onSubmit={secondStepFormik.handleSubmit}
                   className="forgot-password-form-container"
                 >
-                  <Box
-                    sx={{
-                      width: {
-                        xl: 400,
-                        lg: 400,
-                        md: '100%',
-                        sm: '100%',
-                        xs: '100%',
-                      },
-                      display: 'flex',
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      flexDirection: 'column',
-                    }}
-                  >
+                  <Box sx={styles.formContainer}>
                     <Typography
                       variant="h5"
                       sx={{
@@ -242,7 +271,7 @@ const ForgotPassword = () => {
                         marginBottom: '1rem',
                       }}
                     >
-                      Enter your confirmation code
+                      Enter the confirmation code sent to your email
                     </Typography>
                     <Input
                       id="confirmationCode"
@@ -264,35 +293,75 @@ const ForgotPassword = () => {
                     <Button color="primary" type="submit" fullWidth>
                       Next
                     </Button>
-                    {secondError && (
+                    {error && (
                       <Typography
                         variant="body1"
                         sx={{ marginTop: '10px' }}
                         color="error"
                       >
-                        {secondError}
+                        {error}
                       </Typography>
                     )}
-                    {secondLoading && (
-                      <CircularProgress sx={{ marginTop: '20px' }} />
-                    )}
+                    {loading && <CircularProgress sx={{ marginTop: '20px' }} />}
                   </Box>
                 </form>
               </div>
             ) : null}
             {activeStep === 2 ? (
               <div>
-                <Typography variant="h4" sx={{ marginBottom: '30px' }}>
-                  Welcome to Testmate3
-                </Typography>
+                <form
+                  onSubmit={thirdStepFormik.handleSubmit}
+                  className="forgot-password-form-container"
+                >
+                  <Box sx={styles.formContainer}>
+                    <Typography
+                      variant="h5"
+                      sx={{
+                        alignSelf: 'flex-start',
+                        marginBottom: '1rem',
+                      }}
+                    >
+                      Enter your new password
+                    </Typography>
+                    <Input
+                      id="password"
+                      label="password"
+                      name="password"
+                      type="password"
+                      value={thirdStepFormik.values.password}
+                      onChange={thirdStepFormik.handleChange}
+                      error={
+                        thirdStepFormik.touched.password &&
+                        !!thirdStepFormik.errors.password
+                      }
+                      helperText={
+                        thirdStepFormik.touched.password &&
+                        thirdStepFormik.errors.password
+                      }
+                      fullWidth
+                    />
+
+                    <Button color="primary" type="submit" fullWidth>
+                      Next
+                    </Button>
+                    {error && (
+                      <Typography
+                        variant="body1"
+                        sx={{ marginTop: '10px' }}
+                        color="error"
+                      >
+                        {error}
+                      </Typography>
+                    )}
+                    {loading && <CircularProgress sx={{ marginTop: '20px' }} />}
+                  </Box>
+                </form>
               </div>
             ) : null}
           </div>
         </Box>
       </div>
-      <div className="login-image-container">
-        <img src={loginImageWhite} alt="logo" className="login-image" />
-      </div>
+      <div className="login-image-container" />
     </div>
   );
 };
