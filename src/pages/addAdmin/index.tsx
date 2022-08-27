@@ -1,16 +1,11 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState, useEffect } from 'react';
-import { Box, Typography, CircularProgress } from '@mui/material';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import CheckIcon from '@mui/icons-material/Check';
-import ClearIcon from '@mui/icons-material/Clear';
 import { useFormik } from 'formik';
 import { toast } from 'react-toastify';
+import { Box, Typography, CircularProgress, Toolbar } from '@mui/material';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { Button, Input } from '../../components';
+import { Button, Input, Modal } from '../../components';
 import { createAdminSchema } from '../../utils';
 import { http } from '../../services';
 import { createAdminI, Admin } from '../../interfaces';
@@ -37,9 +32,9 @@ const AddAdmin = () => {
   };
 
   const columns: GridColDef[] = [
-    { field: 'email', headerName: 'Email', width: 300 },
-    { field: 'firstName', headerName: 'First Name', width: 300 },
-    { field: 'lastName', headerName: 'Last Name', width: 300 },
+    { field: 'email', headerName: 'Email', width: 350 },
+    { field: 'firstName', headerName: 'First Name', width: 275 },
+    { field: 'lastName', headerName: 'Last Name', width: 275 },
     {
       field: 'lastLogin',
       headerName: 'Last Login',
@@ -48,13 +43,12 @@ const AddAdmin = () => {
         return new Date(params.value).toLocaleString();
       },
     },
-    { field: 'isActive', headerName: 'Is Active', width: 100 },
-    // delete button
+    { field: 'isActive', headerName: 'Is Active', width: 160 },
     {
       field: 'delete',
-      headerName: 'Delete',
-      width: 150,
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      headerName: '',
+      width: 160,
+
       renderCell: (params: any) => {
         return (
           <DeleteIcon
@@ -91,6 +85,7 @@ const AddAdmin = () => {
         data: { user },
       } = await http.post('api/v1/createAdmin', values);
       setLoading(user);
+      console.log(user, 'userrr');
       toast.success('Admin created successfully');
       setAdmins([
         ...admins,
@@ -104,7 +99,6 @@ const AddAdmin = () => {
         },
       ]);
       setLoading(false);
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (e: any) {
       setLoading(false);
       if (e.response.data.message) {
@@ -125,15 +119,15 @@ const AddAdmin = () => {
     onSubmit,
   });
   return (
-    <Box sx={styles.pageContainer}>
-      <Box>
-        <Typography color="primary" variant="h4" sx={styles.headerStyle}>
+    <Box>
+      <Box sx={styles.pageContainer}>
+        <Typography color="primary" variant="h5" sx={styles.headerStyle}>
           Add new Admin
         </Typography>
         <form onSubmit={formik.handleSubmit}>
           <Box sx={styles.formContainer}>
             <Box sx={styles.inputContainer}>
-              <Typography variant="h5" sx={styles.inputLabel}>
+              <Typography variant="h6" sx={styles.inputLabel}>
                 Email
               </Typography>
               <Input
@@ -148,7 +142,7 @@ const AddAdmin = () => {
               />
             </Box>
             <Box sx={styles.inputContainer}>
-              <Typography variant="h5" sx={styles.inputLabel}>
+              <Typography variant="h6" sx={styles.inputLabel}>
                 First Name
               </Typography>
               <Input
@@ -164,7 +158,7 @@ const AddAdmin = () => {
             </Box>
 
             <Box sx={styles.inputContainer}>
-              <Typography variant="h5" sx={styles.inputLabel}>
+              <Typography variant="h6" sx={styles.inputLabel}>
                 Last Name
               </Typography>
               <Input
@@ -193,50 +187,33 @@ const AddAdmin = () => {
                   {error}
                 </Typography>
               )}
-              {loading && <CircularProgress sx={{ marginTop: '20px' }} />}
+              {loading && <CircularProgress sx={{ marginTop: '10px' }} />}
             </Box>
           </Box>
         </form>
       </Box>
-      <Dialog
+      <Modal
+        handleClose={handleClose}
         open={!!selectedAdminId}
-        onClose={handleClose}
-        aria-labelledby="responsive-dialog-title"
-      >
-        <DialogContent>
-          <DialogContentText sx={{ fontSize: '20px' }}>
-            Are you sure you want to delete this admin?
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <CheckIcon
-            onClick={() => deleteAdmin(selectedAdminId)}
-            color="success"
-            sx={{ cursor: 'pointer' }}
-          />
-          <ClearIcon
-            onClick={handleClose}
-            color="error"
-            sx={{ cursor: 'pointer' }}
-          />
-        </DialogActions>
-      </Dialog>
-      <Typography color="primary" variant="h4" sx={styles.headerStyle}>
-        Admins List
-      </Typography>
-      <Box
-        sx={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          marginTop: '20px',
-          height: '400px',
-          width: '96%',
-        }}
-      >
+        message="Are you sure you want to delete this admin?"
+        handleConfirm={() => deleteAdmin(selectedAdminId)}
+      />
+
+      <Toolbar sx={styles.toolbar}>
+        <Typography variant="h6" color="primary">
+          Admin List
+        </Typography>
+      </Toolbar>
+      <Box sx={styles.TableContainer}>
         {apiLoading && <CircularProgress />}
         {admins.length ? (
-          <DataGrid columns={columns} rows={admins} pageSize={5} />
+          <DataGrid
+            columns={columns}
+            rows={admins}
+            pageSize={6}
+            sx={styles.DataGrid}
+            selectionModel={[]}
+          />
         ) : (
           <Typography variant="h6" color="primary">
             No admins found
