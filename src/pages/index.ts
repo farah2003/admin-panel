@@ -6,9 +6,6 @@ import ForgotPassword from './forgotPassword/forgotPassword';
 import ViewKits from './viewKits';
 import Charts from './dashboard';
 
-<<<<<<< HEAD
-export { LoginPage, AddKits, ChangePassword, AddAdmin, ViewKits, Charts };
-=======
 export {
   LoginPage,
   AddKits,
@@ -16,5 +13,5 @@ export {
   AddAdmin,
   ViewKits,
   ForgotPassword,
+  Charts,
 };
->>>>>>> main

@@ -5,11 +5,8 @@ import {
   LoginPage,
   ChangePassword,
   AddAdmin,
-<<<<<<< HEAD
   Charts,
-=======
   ForgotPassword,
->>>>>>> main
   ViewKits,
 } from './pages';
 import { Dashboard } from './components';
