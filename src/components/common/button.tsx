@@ -26,7 +26,7 @@ const Button = ({
   children,
   fullWidth = false,
   type = 'button',
-  customstyle = buttonStyle,
+  customstyle,
   disabled = false,
 }: ButtonProps) => {
   return (

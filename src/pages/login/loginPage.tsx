@@ -4,14 +4,13 @@ import { useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 import { Button, Input } from '../../components';
 import { loginSchema } from '../../utils';
-import loginImage from '../../assets/logo.png';
 import { UserContext } from '../../context';
 import { http } from '../../services';
 import { LoginCredentials } from '../../interfaces';
 import './style.css';
 
 const LoginPage = () => {
-  const { setUser } = useContext(UserContext);
+  const { user, setUser } = useContext(UserContext);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -43,7 +42,7 @@ const LoginPage = () => {
 
   const formik = useFormik({
     initialValues: {
-      email: '',
+      email: user.email || '',
       password: '',
     },
     validationSchema: loginSchema,
@@ -81,7 +80,13 @@ const LoginPage = () => {
             helperText={formik.touched.password && formik.errors.password}
             fullWidth
           />
-          <button type="button" className="forget-password-btn">
+          <button
+            type="button"
+            className="forget-password-btn"
+            onClick={() => {
+              navigate('/forgot-password');
+            }}
+          >
             Reset password
           </button>
           <Button color="primary" type="submit" fullWidth>
@@ -99,9 +104,7 @@ const LoginPage = () => {
           {loading && <CircularProgress sx={{ marginTop: '20px' }} />}
         </form>
       </div>
-      <div className="login-image-container">
-        <img src={loginImage} alt="logo" className="login-image" />
-      </div>
+      <div className="login-image-container" />
     </div>
   );
 };
