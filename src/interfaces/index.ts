@@ -10,6 +10,7 @@ import * as viewKits from './viewKits';
 import Admin from './admin';
 import { ModelI } from './modal';
 import { responseI } from './response';
+import ForgotPasswordChildren from './forgotPasswordChildren';
 
 export {
   User,
@@ -25,4 +26,5 @@ export {
   Admin,
   ModelI,
   responseI,
+  ForgotPasswordChildren,
 };
