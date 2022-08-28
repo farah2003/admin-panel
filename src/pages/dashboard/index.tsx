@@ -83,7 +83,7 @@ const Charts = () => {
       <Backdrop
         sx={{
           color: '#fff',
-          zIndex: (theme) => theme.zIndex.drawer + 99999,
+          zIndex: (theme) => theme.zIndex.drawer + 999,
         }}
         open={loading}
       >
