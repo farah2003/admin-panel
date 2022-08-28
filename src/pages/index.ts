@@ -4,6 +4,7 @@ import ChangePassword from './changePassword/changePassword';
 import AddAdmin from './addAdmin';
 import ForgotPassword from './forgotPassword/forgotPassword';
 import ViewKits from './viewKits';
+import Charts from './dashboard';
 
 export {
   LoginPage,
@@ -12,4 +13,5 @@ export {
   AddAdmin,
   ViewKits,
   ForgotPassword,
+  Charts,
 };
