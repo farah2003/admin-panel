@@ -7,6 +7,7 @@ import Dashboard from './Dashbord/dashbord';
 import Header from './Header/header';
 import Modal from './modal';
 import BarChart from './barChart';
+import PieChart from './pieChart';
 
 export {
   Button,
@@ -18,4 +19,5 @@ export {
   AddSingleKit,
   Modal,
   BarChart,
+  PieChart,
 };

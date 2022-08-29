@@ -270,6 +270,7 @@ const ViewKits = () => {
         handleConfirm={() => handleDeleteKit()}
         handleClose={() => handleClose()}
         message="Are you sure you want to delete kits"
+        setOpen={setOpen}
       />
     </>
   );
