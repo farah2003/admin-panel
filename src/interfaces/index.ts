@@ -10,6 +10,15 @@ import * as viewKits from './viewKits';
 import Admin from './admin';
 import { ModelI } from './modal';
 import { responseI } from './response';
+import {
+  BarDataI,
+  objectI,
+  PieChartDataI,
+  point,
+  BarChartProps,
+  pieChartDataI,
+  dataCountI,
+} from './Chart';
 import ForgotPasswordChildren from './forgotPasswordChildren';
 
 export {
@@ -26,5 +35,12 @@ export {
   Admin,
   ModelI,
   responseI,
+  BarDataI,
+  objectI,
+  PieChartDataI,
+  point,
+  BarChartProps,
+  pieChartDataI,
+  dataCountI,
   ForgotPasswordChildren,
 };
