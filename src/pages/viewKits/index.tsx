@@ -102,6 +102,16 @@ const ViewKits = () => {
       field: 'expirationDate',
       headerName: 'Expiration Date',
       width: 300,
+      renderCell: (data: any) => {
+        if (new Date(data.formattedValue) < new Date()) {
+          return (
+            <Typography variant="body1" color="error">
+              {data.formattedValue}
+            </Typography>
+          );
+        }
+        return <Typography variant="body1">{data.formattedValue}</Typography>;
+      },
     },
     {
       field: 'kitType',
