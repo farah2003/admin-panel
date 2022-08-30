@@ -8,6 +8,7 @@ export const inputContainer = {
 export const inputLabel = {
   alignSelf: 'flex-start',
   marginBottom: '1rem',
+  display: { xl: 'block', lg: 'block', md: 'block', sm: 'none', xs: 'none' },
 };
 export const formContainer = {
   display: 'flex',
@@ -30,6 +31,7 @@ export const buttonContainer = {
   flexDirection: 'column',
   alignItems: 'center',
   width: { xl: '250px', lg: '150px', md: '150px', sm: '100%', xs: '100%' },
+  marginTop: { xl: '1rem', lg: '1rem', md: '0rem', sm: '0rem', xs: '0rem' },
 };
 export const messagesContainer = {
   display: 'flex',
@@ -50,7 +52,7 @@ export const TableContainer = {
   justifyContent: 'center',
   alignItems: 'center',
   marginTop: '3px',
-  height: '450px',
+  height: { xl: 380, lg: 350, md: 300, sm: 270, xs: 270 },
   width: '100%',
   borderRaduis: '5px',
 };

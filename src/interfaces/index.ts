@@ -19,6 +19,7 @@ import {
   pieChartDataI,
   dataCountI,
 } from './Chart';
+import ForgotPasswordChildren from './forgotPasswordChildren';
 
 export {
   User,
@@ -41,4 +42,5 @@ export {
   BarChartProps,
   pieChartDataI,
   dataCountI,
+  ForgotPasswordChildren,
 };

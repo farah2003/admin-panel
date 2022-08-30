@@ -40,7 +40,10 @@ const AddAdmin = () => {
       headerName: 'Last Login',
       width: 300,
       valueFormatter: (params) => {
-        return new Date(params.value).toLocaleString();
+        if (params.value) {
+          return new Date(params.value).toLocaleString();
+        }
+        return '_';
       },
     },
     { field: 'isActive', headerName: 'Is Active', width: 160 },
@@ -169,6 +172,7 @@ const AddAdmin = () => {
                 onChange={formik.handleChange}
                 error={formik.touched.lastName && !!formik.errors.lastName}
                 helperText={formik.touched.lastName && formik.errors.lastName}
+                customstyle={{ marginBottom: '0' }}
                 fullWidth
               />
             </Box>
@@ -205,19 +209,16 @@ const AddAdmin = () => {
         </Typography>
       </Toolbar>
       <Box sx={styles.TableContainer}>
-        {apiLoading && <CircularProgress />}
-        {admins.length ? (
+        {apiLoading ? (
+          <CircularProgress />
+        ) : (
           <DataGrid
             columns={columns}
             rows={admins}
-            pageSize={6}
+            pageSize={5}
             sx={styles.DataGrid}
             selectionModel={[]}
           />
-        ) : (
-          <Typography variant="h6" color="primary">
-            No admins found
-          </Typography>
         )}
       </Box>
     </Box>

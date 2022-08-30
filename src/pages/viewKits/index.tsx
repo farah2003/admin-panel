@@ -180,6 +180,7 @@ const ViewKits = () => {
                     value={formik.values.code}
                     onChange={formik.handleChange}
                     readOnly
+                    disabled
                   />
 
                   <Input
@@ -190,6 +191,7 @@ const ViewKits = () => {
                     value={formik.values.kitType}
                     onChange={formik.handleChange}
                     readOnly
+                    disabled
                   />
                   <Input
                     fullWidth
@@ -224,6 +226,13 @@ const ViewKits = () => {
                       customstyle={style.EditButton}
                     >
                       EDIT
+                    </MaterialButton>
+                    <MaterialButton
+                      color="inherit"
+                      onClick={() => setOpenEditModal(false)}
+                      customstyle={style.EditButton}
+                    >
+                      CANCEL
                     </MaterialButton>
                   </DialogActions>
                 </form>
