@@ -27,7 +27,6 @@ const BarChart = ({
   startingDate,
   endingDate,
 }: BarChartProps) => {
-  console.log(validData, invalidData);
   const valid = {
     label: 'Valid',
     backgroundColor: '#7750d9',
@@ -81,7 +80,7 @@ const BarChart = ({
           y: {
             title: {
               display: true,
-              text: 'NUMBER',
+              text: 'SCANS COUNT',
               align: 'end',
               color: '#000',
               font: {

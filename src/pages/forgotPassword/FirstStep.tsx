@@ -17,7 +17,6 @@ const FirstStep = ({ handleComplete }: ForgotPasswordChildren) => {
   const onSubmit = async (values: { email: string }) => {
     setError('');
     setLoading(true);
-    console.log(values);
     try {
       await http.post('api/v1/email-confirmation', values);
       setUser({

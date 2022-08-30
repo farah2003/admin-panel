@@ -21,7 +21,6 @@ const SecondStep = ({ handleComplete }: ForgotPasswordChildren) => {
     setError('');
     setLoading(true);
     try {
-      console.log(values);
       await http.post('api/v1/verify-confirmation-code', {
         email: user.email,
         confirmationCode: values.confirmationCode,

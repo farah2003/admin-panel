@@ -36,8 +36,11 @@ export const Button = {
 };
 
 export const PieContainer = {
-  width: '47%',
-  height: '47%',
+  width: '46%',
+  height: '46%',
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
 };
 export const HeaderSection = {
   idth: '100%',
@@ -60,7 +63,7 @@ export const Title = {
 
 export const BarChartContainer = {
   marginTop: '2%',
-  width: '90%',
+  width: '88%',
   height: '100%',
 };
 export const ChartContainer = {
