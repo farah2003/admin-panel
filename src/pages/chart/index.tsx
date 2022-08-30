@@ -6,21 +6,17 @@ import { Box, Typography, Backdrop, CircularProgress } from '@mui/material';
 import { ArrowForwardIos, ArrowBackIos } from '@mui/icons-material';
 import { Input, Button, PieChart, BarChart } from '../../components';
 import { http } from '../../services';
-import { dataI, objectI } from '../../interfaces';
+import { BarDataI, objectI, PieChartDataI } from '../../interfaces';
 import { timePeriodSchema } from '../../utils/validation';
 import * as styles from './style';
 
-interface PieChartDataI {
-  status: string;
-  count: number;
-}
 const Charts = () => {
   ChartJS.register(ArcElement, Tooltip, Legend);
   const [pieChartData, setPieChartData] = useState<PieChartDataI[]>([]);
   const [loading, setLoading] = useState(false);
-  const [validData, setValidData] = useState<Array<dataI>>([]);
-  const [invalidData, setInvalidData] = useState<Array<dataI>>([]);
-  const [expiredData, setExpiredData] = useState<Array<dataI>>([]);
+  const [validData, setValidData] = useState<Array<BarDataI>>([]);
+  const [invalidData, setInvalidData] = useState<Array<BarDataI>>([]);
+  const [expiredData, setExpiredData] = useState<Array<BarDataI>>([]);
   const [current, setCurrent] = useState(0);
   const [starting, setStarting] = useState(
     moment(Date.now()).subtract(14, 'd').format('YYYY-MM-DD')
@@ -81,11 +77,7 @@ const Charts = () => {
     }
   };
   useEffect(() => {
-    console.log(starting, ending);
     getPieChartData(starting, ending);
-  }, []);
-
-  useEffect(() => {
     getBarChartData(starting, ending);
   }, []);
 

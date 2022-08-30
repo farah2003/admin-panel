@@ -1,11 +1,12 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Pie } from 'react-chartjs-2';
 
-const PieChart = ({ pieChartData }: any) => {
-  const values: any = {};
+import { pieChartDataI, dataCountI } from '../../interfaces';
 
-  pieChartData.forEach((element: any) => {
-    values[element.status] = element.count;
+const PieChart = ({ pieChartData }: pieChartDataI) => {
+  const dataCount: dataCountI = {};
+
+  pieChartData.forEach((element) => {
+    dataCount[element.status] = element.count;
   });
 
   return (
@@ -14,7 +15,7 @@ const PieChart = ({ pieChartData }: any) => {
         labels: ['Valid', 'Invalid', 'Expired'],
         datasets: [
           {
-            data: [values.valid, values.invalid, values.expired],
+            data: [dataCount.valid, dataCount.invalid, dataCount.expired],
             backgroundColor: ['#7750d9', '#FDD230', '#FF6992'],
           },
         ],

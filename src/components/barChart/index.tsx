@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -10,6 +9,7 @@ import {
 } from 'chart.js';
 import moment from 'moment';
 import { Bar } from 'react-chartjs-2';
+import { BarChartProps } from '../../interfaces';
 
 ChartJS.register(
   CategoryScale,
@@ -20,15 +20,14 @@ ChartJS.register(
   Legend
 );
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const BarChart = ({
   validData,
   invalidData,
   expiredData,
   startingDate,
   endingDate,
-}: any) => {
-  console.log(validData, invalidData, expiredData);
+}: BarChartProps) => {
+  console.log(validData, invalidData);
   const valid = {
     label: 'Valid',
     backgroundColor: '#7750d9',
