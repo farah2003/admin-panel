@@ -3,24 +3,34 @@ import { useFormik } from 'formik';
 import moment from 'moment';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Box, Typography, Backdrop, CircularProgress } from '@mui/material';
-import Carousel from 'react-material-ui-carousel';
+import { ArrowForwardIos, ArrowBackIos } from '@mui/icons-material';
 import { Input, Button, PieChart, BarChart } from '../../components';
 import { http } from '../../services';
-import * as styles from './style';
 import { dataI, objectI } from '../../interfaces';
 import { timePeriodSchema } from '../../utils/validation';
+import * as styles from './style';
 
+interface PieChartDataI {
+  status: string;
+  count: number;
+}
 const Charts = () => {
   ChartJS.register(ArcElement, Tooltip, Legend);
-  interface PieChartDataI {
-    status: string;
-    count: number;
-  }
   const [pieChartData, setPieChartData] = useState<PieChartDataI[]>([]);
   const [loading, setLoading] = useState(false);
   const [validData, setValidData] = useState<Array<dataI>>([]);
   const [invalidData, setInvalidData] = useState<Array<dataI>>([]);
   const [expiredData, setExpiredData] = useState<Array<dataI>>([]);
+  const [current, setCurrent] = useState(0);
+  const [starting, setStarting] = useState(
+    moment(Date.now()).subtract(14, 'd').format('YYYY-MM-DD')
+  );
+  const [ending, setEnding] = useState(moment(Date.now()).format('YYYY-MM-DD'));
+
+  const changeCurrentSlide = () => {
+    if (current) setCurrent(0);
+    else setCurrent(1);
+  };
 
   const getPieChartData = async (startingDate: string, endingDate: string) => {
     setLoading(true);
@@ -49,6 +59,7 @@ const Charts = () => {
     }
 
     setPieChartData(rows);
+    console.log(rows);
     setLoading(false);
   };
 
@@ -62,7 +73,6 @@ const Charts = () => {
       } = await http.get(
         `api/v1/scans-records-day?from=${startingDate}T00:00:00.000Z&to=${endingDate}T23:59:59.999Z`
       );
-
       setExpiredData(fillData(Object.keys(expired), expired));
       setInvalidData(fillData(Object.keys(invalid), invalid));
       setValidData(fillData(Object.keys(valid), valid));
@@ -71,26 +81,18 @@ const Charts = () => {
     }
   };
   useEffect(() => {
-    const startingDate = moment(Date.now())
-      .subtract(30, 'd')
-      .format('YYYY-MM-DD');
-    const endingDate = moment(Date.now()).format('YYYY-MM-DD');
-
-    getPieChartData(startingDate, endingDate);
+    console.log(starting, ending);
+    getPieChartData(starting, ending);
   }, []);
 
   useEffect(() => {
-    const startingDate = moment(Date.now())
-      .subtract(30, 'd')
-      .format('YYYY-MM-DD');
-    const endingDate = moment(Date.now()).format('YYYY-MM-DD');
-    getBarChartData(startingDate, endingDate);
+    getBarChartData(starting, ending);
   }, []);
 
   const formik = useFormik({
     initialValues: {
       startingDate: moment(Date.now())
-        .subtract(7, 'd')
+        .subtract(14, 'd')
         .format('YYYY-MM-DD')
         .toString(),
       endingDate: moment(Date.now()).format('YYYY-MM-DD').toString(),
@@ -107,31 +109,25 @@ const Charts = () => {
       const end = moment(endingDate).format('YYYY-MM-DD');
       getPieChartData(start, end);
       getBarChartData(start, end);
+      setStarting(start);
+      setEnding(end);
     },
     validationSchema: timePeriodSchema,
   });
 
   return (
-    <Box sx={{ height: '85%' }}>
+    <Box>
       <Backdrop sx={styles.Backdrop} open={loading}>
         <CircularProgress color="primary" size="5rem" />
       </Backdrop>
-      <Box
-        sx={{
-          width: '100%',
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          padding: '0 20px',
-        }}
-      >
+      <Box sx={styles.HeaderSection}>
         <Typography color="primary" variant="h5" sx={styles.Title}>
           Scans Analysis
         </Typography>
         <form onSubmit={formik.handleSubmit}>
           <Box sx={styles.Form}>
             <Box>
-              <Typography variant="h5" sx={styles.Typography}>
+              <Typography variant="h6" sx={styles.Typography}>
                 Starting Date
               </Typography>
               <Input
@@ -149,7 +145,7 @@ const Charts = () => {
               />
             </Box>
             <Box>
-              <Typography variant="h5" sx={styles.Typography}>
+              <Typography variant="h6" sx={styles.Typography}>
                 Ending Date
               </Typography>
               <Input
@@ -170,68 +166,47 @@ const Charts = () => {
           </Box>
         </form>
       </Box>
-      <Box
-        sx={{
-          width: '100%',
-          height: '100%',
-          padding: '0 10px',
-          display: 'flex',
-          justifyContent: 'center',
-          alignContent: 'center',
-        }}
-      >
-        <Carousel
-          animation="slide"
-          autoPlay={false}
-          sx={styles.carousel}
-          navButtonsProps={{
-            style: {
-              backgroundColor: '#7750d9',
-              width: 60,
-              height: 60,
-            },
-          }}
-          indicatorIconButtonProps={{
-            style: {
-              display: 'none',
-            },
-          }}
-          next={(next, active) =>
-            console.log(`we left ${active}, and are now at ${next}`)
-          }
-          prev={(prev, active) =>
-            console.log(`we left ${active}, and are now at ${prev}`)
-          }
-          navButtonsAlwaysVisible
-        >
-          {pieChartData.length ? (
-            <Box sx={styles.PieContainer}>
-              <PieChart pieChartData={pieChartData} />
+      <Box sx={styles.CarsouselContainer}>
+        <Box sx={styles.Carousel}>
+          {current === 0 ? (
+            <Box sx={styles.ChartContainer}>
+              {pieChartData.length ? (
+                <Box sx={styles.PieContainer}>
+                  <PieChart pieChartData={pieChartData} />
+                </Box>
+              ) : (
+                'no data found'
+              )}
             </Box>
           ) : (
-            'no data found'
+            <Box sx={styles.ChartContainer}>
+              <Box sx={styles.BarChartContainer}>
+                <BarChart
+                  validData={validData}
+                  invalidData={invalidData}
+                  expiredData={expiredData}
+                  startingDate={starting}
+                  endingDate={ending}
+                />
+              </Box>
+            </Box>
           )}
-          <Box
+
+          <ArrowBackIos
+            onClick={changeCurrentSlide}
             sx={{
-              width: '90%',
-              height: '100%',
-              marginLeft: '5%',
-              marginTop: {
-                xl: '3%',
-                lg: '15%',
-                md: '15%',
-                sm: '15%',
-                xs: '15%',
-              },
+              ...styles.Icons,
+              ...styles.prev,
             }}
-          >
-            <BarChart
-              validData={validData}
-              invalidData={invalidData}
-              expiredData={expiredData}
-            />
-          </Box>
-        </Carousel>
+          />
+          <ArrowForwardIos
+            onClick={changeCurrentSlide}
+            sx={{
+              ...styles.Icons,
+              ...styles.next,
+            }}
+          />
+        </Box>
       </Box>
     </Box>
   );

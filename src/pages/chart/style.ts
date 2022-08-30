@@ -20,6 +20,7 @@ export const Form = {
 };
 
 export const Typography = {
+  marginTop: '0.8rem',
   alignSelf: 'flex-start',
   marginBottom: '0.3rem',
 };
@@ -30,51 +31,20 @@ export const Backdrop = {
 };
 export const Button = {
   marginBottom: 0,
-
-  p: 1.4,
-  marginTop: '0.8rem',
+  p: 1.6,
+  marginTop: '1.9rem',
 };
 
 export const PieContainer = {
-  width: {
-    xl: '48%',
-    lg: '65%',
-    md: '65%',
-    sm: '75%',
-    xs: '70%',
-  },
-  height: {
-    xl: '48%',
-    lg: '65%',
-    md: '65%',
-    sm: '75%',
-  },
-  display: 'flex',
-  alignContent: 'center',
-  marginLeft: {
-    xl: '22%',
-    lg: '15%',
-    md: '15%',
-    sm: '15%',
-    xs: '15%',
-  },
+  width: '47%',
+  height: '47%',
 };
-
-export const carousel = {
-  width: {
-    xl: '100%',
-    lg: '100%',
-    md: '100%',
-    sm: '90%',
-    xs: '100%',
-  },
-  height: {
-    xl: '100%',
-    lg: '100%',
-    md: '100%',
-    sm: '95%',
-    xs: '70%',
-  },
+export const HeaderSection = {
+  idth: '100%',
+  display: 'flex',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+  padding: '0 20px',
 };
 
 export const Title = {
@@ -86,4 +56,50 @@ export const Title = {
     sm: 'none',
     xs: 'none',
   },
+};
+
+export const BarChartContainer = {
+  marginTop: '2%',
+  width: '90%',
+  height: '100%',
+};
+export const ChartContainer = {
+  width: '100%',
+  height: '100%',
+  display: 'flex',
+  justifyContent: 'center',
+};
+
+export const CarsouselContainer = {
+  width: '100%',
+  height: '100%',
+  padding: '0 10px',
+  display: 'flex',
+  justifyContent: 'center',
+  alignContent: 'center',
+};
+export const Carousel = { width: '100%', height: '100%', position: 'relative' };
+
+export const Icons = {
+  cursor: 'pointer',
+  position: 'absolute',
+  top: '50%',
+  width: 'auto',
+  color: '#7750d9',
+  fontSize: '1.5vw',
+  fontWeight: 'bold',
+  borderRadius: '10px',
+  '&:hover': {
+    backgroundColor: '#7750d9',
+    color: '#ffff',
+  },
+};
+
+export const prev = {
+  paddingLeft: '.8%',
+};
+
+export const next = {
+  paddingLeft: '.4%',
+  right: '0',
 };

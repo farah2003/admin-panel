@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -20,7 +21,13 @@ ChartJS.register(
 );
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const BarChart = ({ validData, invalidData, expiredData }: any) => {
+const BarChart = ({
+  validData,
+  invalidData,
+  expiredData,
+  startingDate,
+  endingDate,
+}: any) => {
   console.log(validData, invalidData, expiredData);
   const valid = {
     label: 'Valid',
@@ -41,8 +48,8 @@ const BarChart = ({ validData, invalidData, expiredData }: any) => {
     borderColor: '#ff3e90',
     data: expiredData,
   };
-  const from = new Date('2022-08-08');
-  const to = new Date('2022-08-18');
+  const from = new Date(startingDate);
+  const to = new Date(endingDate);
   const labels = [];
   let dx = from;
   while (dx <= to) {

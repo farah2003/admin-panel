@@ -9,7 +9,7 @@ import {
   ForgotPassword,
   ViewKits,
 } from './pages';
-import { Dashboard, BarChart } from './components';
+import { Dashboard } from './components';
 import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
