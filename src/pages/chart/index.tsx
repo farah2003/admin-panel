@@ -36,20 +36,7 @@ const Charts = () => {
       `api/v1/scans-records?from=${startingDate}T00:00:00.000Z&to=${endingDate}T23:59:59.999Z`
     );
     if (!rows) {
-      setPieChartData([
-        {
-          status: 'valid',
-          count: 0,
-        },
-        {
-          status: 'expired',
-          count: 0,
-        },
-        {
-          status: 'invalid',
-          count: 0,
-        },
-      ]);
+      setPieChartData([]);
       setLoading(false);
       return;
     }
@@ -162,13 +149,12 @@ const Charts = () => {
         <Box sx={styles.Carousel}>
           {current === 0 ? (
             <Box sx={styles.ChartContainer}>
-              {pieChartData.length ? (
-                <Box sx={styles.PieContainer}>
-                  <PieChart pieChartData={pieChartData} />
-                </Box>
-              ) : (
-                'no data found'
-              )}
+              <Box sx={styles.PieContainer}>
+                <PieChart pieChartData={pieChartData} />
+                {!pieChartData.length && (
+                  <Typography variant="h6">no data found</Typography>
+                )}
+              </Box>
             </Box>
           ) : (
             <Box sx={styles.ChartContainer}>

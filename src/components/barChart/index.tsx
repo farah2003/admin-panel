@@ -80,7 +80,7 @@ const BarChart = ({
           y: {
             title: {
               display: true,
-              text: 'NUMBER',
+              text: 'SCANS COUNT',
               align: 'end',
               color: '#000',
               font: {
