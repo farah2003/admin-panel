@@ -33,7 +33,7 @@ const AddSingleKit = () => {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (e: any) {
       setLoading(false);
-      console.log(e);
+
       if (e.response.data.message) {
         setError(e.response.data.message);
         return;

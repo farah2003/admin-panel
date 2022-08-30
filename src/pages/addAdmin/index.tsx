@@ -88,7 +88,7 @@ const AddAdmin = () => {
         data: { user },
       } = await http.post('api/v1/createAdmin', values);
       setLoading(user);
-      console.log(user, 'userrr');
+
       toast.success('Admin created successfully');
       setAdmins([
         ...admins,

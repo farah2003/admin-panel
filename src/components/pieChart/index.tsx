@@ -4,11 +4,9 @@ import { pieChartDataI, dataCountI } from '../../interfaces';
 
 const PieChart = ({ pieChartData }: pieChartDataI) => {
   const dataCount: dataCountI = {};
-
   pieChartData.forEach((element) => {
     dataCount[element.status] = element.count;
   });
-
   return (
     <Pie
       data={{

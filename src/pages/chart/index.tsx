@@ -55,7 +55,7 @@ const Charts = () => {
     }
 
     setPieChartData(rows);
-    console.log(rows);
+
     setLoading(false);
   };
 
@@ -67,7 +67,7 @@ const Charts = () => {
       const { data } = await http.get(
         `api/v1/scans-records-day?from=${startingDate}T00:00:00.000Z&to=${endingDate}T23:59:59.999Z`
       );
-      console.log(data, 'data');
+
       const { Expired, Invalid, Valid } = data;
       setExpiredData(fillData(Object.keys(Expired || {}), Expired));
       setInvalidData(fillData(Object.keys(Invalid || {}), Invalid));

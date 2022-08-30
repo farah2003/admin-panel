@@ -24,7 +24,6 @@ const ThirdStep = ({ handleComplete }: ForgotPasswordChildren) => {
     setError('');
     setLoading(true);
     try {
-      console.log(values);
       await http.post('api/v1/change-password', {
         email: user.email,
         confirmationCode: user.confirmationCode,

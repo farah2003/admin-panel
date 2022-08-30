@@ -27,7 +27,6 @@ const BarChart = ({
   startingDate,
   endingDate,
 }: BarChartProps) => {
-  console.log(validData, invalidData);
   const valid = {
     label: 'Valid',
     backgroundColor: '#7750d9',
