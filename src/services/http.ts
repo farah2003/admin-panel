@@ -1,6 +1,9 @@
 import axios from 'axios';
-
 import { toast } from 'react-toastify';
+
+axios.defaults.baseURL =
+  process.env.REACT_APP_BASE_API_URL || 'http://localhost:3000';
+axios.defaults.withCredentials = true;
 
 axios.interceptors.response.use(
   (response) => response.data,
