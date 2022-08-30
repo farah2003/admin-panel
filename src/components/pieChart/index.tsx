@@ -15,7 +15,7 @@ const PieChart = ({ pieChartData }: pieChartDataI) => {
         labels: ['Valid', 'Invalid', 'Expired'],
         datasets: [
           {
-            data: [dataCount.valid, dataCount.invalid, dataCount.expired],
+            data: [dataCount.Valid, dataCount.Invalid, dataCount.Expired],
             backgroundColor: ['#7750d9', '#FDD230', '#FF6992'],
           },
         ],

@@ -64,14 +64,14 @@ const Charts = () => {
 
   const getBarChartData = async (startingDate: string, endingDate: string) => {
     try {
-      const {
-        data: { expired, invalid, valid },
-      } = await http.get(
+      const { data } = await http.get(
         `api/v1/scans-records-day?from=${startingDate}T00:00:00.000Z&to=${endingDate}T23:59:59.999Z`
       );
-      setExpiredData(fillData(Object.keys(expired), expired));
-      setInvalidData(fillData(Object.keys(invalid), invalid));
-      setValidData(fillData(Object.keys(valid), valid));
+      console.log(data, 'data');
+      const { Expired, Invalid, Valid } = data;
+      setExpiredData(fillData(Object.keys(Expired || {}), Expired));
+      setInvalidData(fillData(Object.keys(Invalid || {}), Invalid));
+      setValidData(fillData(Object.keys(Valid || {}), Valid));
     } catch (e) {
       console.log(e);
     }
