@@ -2,6 +2,7 @@ import { useContext, useState } from 'react';
 import { Box, Typography, CircularProgress } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
+import { toast } from 'react-toastify';
 import { Button, Input } from '../../components';
 import { changePasswordSchema } from '../../utils';
 import { http } from '../../services';
@@ -32,7 +33,9 @@ const ChangePassword = () => {
         userIp: '',
         userRoleId: 0,
       });
+      await http.post('api/v1/logout');
       navigate('/login');
+      toast.success('password change successfully');
 
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (e: any) {

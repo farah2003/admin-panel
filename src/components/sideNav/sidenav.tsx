@@ -2,9 +2,10 @@ import { useState } from 'react';
 import { Drawer, List, Box } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import SideNavListItems from './sidenavListItems';
-import { sideNavItems } from './sideNavItems';
+import sideNavItemsComponet from './sideNavItems';
 import { NavBarInterface } from '../../interfaces';
 import logo from '../../assets/logo.png';
+
 import * as style from './style';
 
 const SideNav = ({ visible, setVisible }: NavBarInterface.ParentProps) => {
@@ -24,7 +25,7 @@ const SideNav = ({ visible, setVisible }: NavBarInterface.ParentProps) => {
           <CloseIcon sx={style.Icon} onClick={handleDrawerVisablity} />
         </Box>
         <List>
-          {sideNavItems.map(({ name, Icon, items, link }) => (
+          {sideNavItemsComponet().map(({ name, Icon, items, link }) => (
             <SideNavListItems
               name={name}
               Icon={Icon}

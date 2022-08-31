@@ -9,6 +9,7 @@ type Props = {
 };
 const UserProvider: React.FC<Props> = ({ children }) => {
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(true);
   const [user, setUser] = useState({
     id: 0,
     firstName: '',
@@ -29,6 +30,7 @@ const UserProvider: React.FC<Props> = ({ children }) => {
     const fetchUser = async () => {
       try {
         const { data } = await http.get('/api/v1/userInfo');
+
         setUser({
           id: data.id,
           firstName: data.firstName,
@@ -36,17 +38,19 @@ const UserProvider: React.FC<Props> = ({ children }) => {
           email: data.email,
           lastLogin: data.lastLogin,
           userIp: data.userIp,
-          userRoleId: data.userRoleId,
+          userRoleId: data.usersRoleId,
         });
-        navigate('/');
-      } catch (error) {
+        setIsLoading(false);
+      } catch (e) {
+        setIsLoading(false);
         navigate('/login');
       }
     };
-
     fetchUser();
   }, []);
-  return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
+  return !isLoading ? (
+    <UserContext.Provider value={value}>{children}</UserContext.Provider>
+  ) : null;
 };
 
 export default UserProvider;
