@@ -1,3 +1,5 @@
+/* eslint-disable no-param-reassign */
+/* eslint-disable no-nested-ternary */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useState } from 'react';
 import { DataGrid, GridColDef, GridSelectionModel } from '@mui/x-data-grid';
@@ -11,6 +13,7 @@ import {
   Button,
   DialogContent,
 } from '@mui/material';
+import * as XLSX from 'xlsx';
 import { useFormik } from 'formik';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { toast } from 'react-toastify';
@@ -147,6 +150,27 @@ const ViewKits = () => {
       },
     },
   ];
+  const handleExportAll = async () => {
+    const { data } = await http.get('api/v1/all-kits');
+    const wb = XLSX.utils.book_new();
+    const sheet = XLSX.utils.json_to_sheet(data);
+    const widthHandler = (datasheet: any) => {
+      datasheet['!cols'] = [
+        { wch: 10 },
+        { wch: 7 },
+        { wch: 18 },
+        { wch: 15 },
+        { wch: 15 },
+        { wch: 10 },
+        { wch: 10 },
+        { wch: 10 },
+      ];
+    };
+    widthHandler(sheet);
+    XLSX.utils.book_append_sheet(wb, sheet);
+
+    XLSX.writeFile(wb, 'Kits.xlsx');
+  };
   const onSubmit = async ({ expirationDate, id }: any) => {
     try {
       await http.patch('api/v1/kits', {
@@ -261,6 +285,13 @@ const ViewKits = () => {
             sx={style.deleteIcon}
             onClick={() => handleOpen()}
           />
+        ) : rows.length ? (
+          <MaterialButton
+            customstyle={{ padding: '5px 10px' }}
+            onClick={handleExportAll}
+          >
+            EXPORT
+          </MaterialButton>
         ) : null}
       </Toolbar>
       <DataGrid
