@@ -156,14 +156,11 @@ const ViewKits = () => {
     const sheet = XLSX.utils.json_to_sheet(data);
     const widthHandler = (datasheet: any) => {
       datasheet['!cols'] = [
-        { wch: 10 },
-        { wch: 7 },
-        { wch: 18 },
-        { wch: 15 },
-        { wch: 15 },
-        { wch: 10 },
-        { wch: 10 },
-        { wch: 10 },
+        { wch: 20 },
+        { wch: 16 },
+        { wch: 16 },
+        { wch: 16 },
+        { wch: 4 },
       ];
     };
     widthHandler(sheet);
