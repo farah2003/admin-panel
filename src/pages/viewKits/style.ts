@@ -6,6 +6,9 @@ export const DataGrid = {
 export const Button = {
   fontSize: '18px',
 };
+export const ExportButton = {
+  fontSize: '18px',
+};
 
 export const errorBox = {
   width: '100%',

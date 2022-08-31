@@ -16,7 +16,6 @@ import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   const { user } = useContext(UserContext);
-  console.log(user);
 
   return (
     <>
