@@ -48,7 +48,7 @@ const LoginPage = () => {
     validationSchema: loginSchema,
     onSubmit,
   });
-  return user.userRoleId ? (
+  return !user.userRoleId ? (
     <div className="login-container">
       <div className="login-form">
         <Typography
