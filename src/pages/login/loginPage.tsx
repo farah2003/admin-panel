@@ -1,6 +1,6 @@
 import { useContext, useState } from 'react';
 import { Typography, CircularProgress } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Navigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 import { Button, Input } from '../../components';
 import { loginSchema } from '../../utils';
@@ -48,7 +48,7 @@ const LoginPage = () => {
     validationSchema: loginSchema,
     onSubmit,
   });
-  return (
+  return user.userRoleId ? (
     <div className="login-container">
       <div className="login-form">
         <Typography
@@ -106,6 +106,8 @@ const LoginPage = () => {
       </div>
       <div className="login-image-container" />
     </div>
+  ) : (
+    <Navigate to="/" />
   );
 };
 
