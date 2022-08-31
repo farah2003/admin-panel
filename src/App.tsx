@@ -1,3 +1,4 @@
+import { useContext } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import {
@@ -10,9 +11,13 @@ import {
   ViewKits,
 } from './pages';
 import { Dashboard } from './components';
+import UserContext from './context/userContext/userContext';
 import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
+  const { user } = useContext(UserContext);
+  console.log(user);
+
   return (
     <>
       <ToastContainer />
@@ -22,11 +27,15 @@ function App() {
           <Route path="view-kits" element={<ViewKits />} />
           <Route path="add-kits" element={<AddKits />} />
           <Route path="change-password" element={<ChangePassword />} />
-          <Route path="add-admin" element={<AddAdmin />} />
-          <Route path="logout" element={<h1>logout</h1>} />
+          {user.userRoleId === 1 && (
+            <Route path="add-admin" element={<AddAdmin />} />
+          )}
         </Route>
-        <Route path="login" element={<LoginPage />} />
-        <Route path="forgot-password" element={<ForgotPassword />} />
+
+        <Route>
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="forgot-password" element={<ForgotPassword />} />
+        </Route>
       </Routes>
     </>
   );
