@@ -33,6 +33,7 @@ const SideNav = ({ visible, setVisible }: NavBarInterface.ParentProps) => {
               link={link}
               selectedItem={selectedItem}
               setSelectedItem={setSelectedItem}
+              key={name}
             />
           ))}
         </List>
