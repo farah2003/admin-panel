@@ -36,7 +36,7 @@ export const Button = {
 };
 
 export const PieContainer = {
-  width: { xl: '46%', lg: '70%', md: '55%', sm: '60%', xs: '100%' },
+  width: { xl: '40%', lg: '65%', md: '55%', sm: '60%', xs: '100%' },
   height: '46%',
   display: 'flex',
   flexDirection: 'column',
