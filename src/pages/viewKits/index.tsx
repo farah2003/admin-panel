@@ -287,7 +287,7 @@ const ViewKits = () => {
             customstyle={{ padding: '5px 10px' }}
             onClick={handleExportAll}
           >
-            EXPORT
+            EXPORT ALL
           </MaterialButton>
         ) : null}
       </Toolbar>
@@ -316,7 +316,7 @@ const ViewKits = () => {
         open={opne}
         handleConfirm={() => handleDeleteKit()}
         handleClose={() => handleClose()}
-        message="Are you sure you want to delete kits"
+        message="Are you sure you want to delete kits ?"
         setOpen={setOpen}
       />
     </>
