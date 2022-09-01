@@ -73,6 +73,7 @@ export const imageContainer = {
 };
 export const image = {
   width: '200px',
+  cursor: 'pointer',
 };
 export const drawerHeader = {
   display: 'flex',

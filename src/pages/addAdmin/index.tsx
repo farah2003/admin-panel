@@ -199,7 +199,7 @@ const AddAdmin = () => {
       <Modal
         handleClose={handleClose}
         open={!!selectedAdminId}
-        message="Are you sure you want to delete this admin?"
+        message="Are you sure you want to delete this admin ?"
         handleConfirm={() => deleteAdmin(selectedAdminId)}
       />
 

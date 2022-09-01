@@ -36,7 +36,7 @@ export const Button = {
 };
 
 export const PieContainer = {
-  width: '46%',
+  width: { xl: '46%', lg: '70%', md: '55%', sm: '60%', xs: '100%' },
   height: '46%',
   display: 'flex',
   flexDirection: 'column',
@@ -62,8 +62,8 @@ export const Title = {
 };
 
 export const BarChartContainer = {
-  marginTop: '2%',
-  width: '88%',
+  marginTop: { xl: '2%', lg: '2%', md: '20%', sm: '10%', xs: '20%' },
+  width: { xl: '88%', lg: '90%', md: '80%', sm: '90%', xs: '90%' },
   height: '100%',
 };
 export const ChartContainer = {
@@ -81,7 +81,11 @@ export const CarsouselContainer = {
   justifyContent: 'center',
   alignContent: 'center',
 };
-export const Carousel = { width: '100%', height: '100%', position: 'relative' };
+export const Carousel = {
+  width: '100%',
+  height: '100%',
+  position: 'relative',
+};
 
 export const Icons = {
   cursor: 'pointer',
@@ -89,7 +93,7 @@ export const Icons = {
   top: '50%',
   width: 'auto',
   color: '#7750d9',
-  fontSize: '1.5vw',
+  fontSize: '30px',
   fontWeight: 'bold',
   borderRadius: '10px',
   '&:hover': {
