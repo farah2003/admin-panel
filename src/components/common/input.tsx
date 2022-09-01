@@ -16,6 +16,7 @@ interface InputProps {
   customstyle?: object;
   readOnly?: boolean;
   disabled?: boolean;
+  size?: 'small' | 'medium' | undefined;
 }
 
 const Input = ({
@@ -32,6 +33,7 @@ const Input = ({
   customstyle,
   readOnly,
   disabled = false,
+  size = 'medium',
 }: InputProps) => {
   return (
     <TextField
@@ -50,6 +52,7 @@ const Input = ({
         readOnly,
       }}
       disabled={disabled}
+      size={size}
     />
   );
 };

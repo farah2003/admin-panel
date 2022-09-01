@@ -34,7 +34,7 @@ const sideNavItemsComponet = () => {
       ],
     },
     {
-      name: 'Accounts',
+      name: 'Account',
       Icon: <Person />,
 
       items: [
@@ -48,7 +48,7 @@ const sideNavItemsComponet = () => {
 
   if (userRoleId === 1) {
     sideNavItems.push({
-      name: 'Manage',
+      name: 'Manage Admins',
       Icon: <ManageAccounts />,
 
       items: [
