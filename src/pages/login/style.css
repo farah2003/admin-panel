@@ -1,0 +1,59 @@
+.login-container {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  height: 100vh;
+  width: 100vw;
+}
+.login-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: 'white';
+  width: 50%;
+}
+.login-form-container {
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 500px;
+}
+.forget-password-btn {
+  background: none;
+  color: #6243c2;
+  border: none;
+  padding: 3px;
+  cursor: pointer;
+  outline: inherit;
+  font-size: 16px;
+  padding: 10px;
+  align-self: flex-start;
+}
+
+@media (max-width: 888px) {
+  .login-container {
+    flex-direction: column-reverse;
+  }
+  .login-form {
+    width: 100%;
+    height: 75%;
+  }
+  .login-form-container {
+    width: 100%;
+  }
+}
+@media screen and (max-width: 858px) and (min-width: 567px) {
+  .login-image {
+    width: 50%;
+  }
+
+  .login-form {
+    margin-top: 100px;
+    justify-content: flex-start;
+  }
+}

@@ -1,0 +1,82 @@
+.forgot-password-container {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  height: 100vh;
+  width: 100vw;
+}
+.forgot-password-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: 'white';
+  width: 50%;
+}
+.forgot-password-form-container {
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.forget-password-btn {
+  background: none;
+  color: #6243c2;
+  border: none;
+  padding: 3px;
+  cursor: pointer;
+  outline: inherit;
+  font-size: 16px;
+  padding: 10px;
+  align-self: flex-start;
+}
+.login-image-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  width: 50%;
+  background-color: #6243c2;
+  background-image: url(../../assets/loginLogoWhite.png);
+  background-repeat: no-repeat;
+  background-size: 65%;
+  background-position: center;
+}
+
+@media (max-width: 1250px) and (min-width: 888px) {
+  .login-image-container {
+    background-size: 70%;
+  }
+}
+
+@media (max-width: 888px) {
+  .forgot-password-container {
+    flex-direction: column-reverse;
+  }
+  .forgot-password-form {
+    width: 100%;
+    height: 75%;
+  }
+  .forgot-password-form-container {
+    width: 100%;
+  }
+  .login-image-container {
+    background-size: 70%;
+    width: 100%;
+    height: 25%;
+    background-color: white;
+    background-image: url(../../assets/loginLogo.png);
+  }
+}
+@media screen and (max-width: 858px) and (min-width: 567px) {
+  .login-image-container {
+    background-size: 80%;
+  }
+  .forgot-password-form {
+    margin-top: 100px;
+    justify-content: flex-start;
+  }
+}
